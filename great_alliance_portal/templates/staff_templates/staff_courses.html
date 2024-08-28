@@ -1,0 +1,32 @@
+{% extends 'staff_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<section id="faq" class="faq section-bg" style="background: white;
+    margin-top: 65px;">
+    <div class="container">
+        {% for course in courses %}
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-in" style="box-shadow: 4px 4px 16px 4px rgba(128, 128, 128, 0.254);
+            border-radius: 10px;">
+
+
+            <div class="col-lg-5">
+                <i class=""></i>
+                
+                <h4><b></b> {{ course.course_code }} | {{ course.course_name }}</h4>
+                
+
+            </div>
+            <div class="col-lg-7">
+                <p>
+                    
+                    <a href="{% url 'instructor_detail' course.id %}" class="btn btn-success">View Details</a>   
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock main_content %}

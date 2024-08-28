@@ -1,0 +1,48 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+<main id="main">
+  <!-- ======= Contact Section ======= -->
+  <section id="services" class="services section-bg" style="
+  background:white; margin-top: 70px;">
+    <div class="container">
+
+      <div class="section-title">
+        <p 
+        style="font-size: large;"><b>Update Staff | {{ staff.admin.first_name }} {{ staff.admin.last_name }}</b></p>
+        <!--<p>Update Staff | {{ staff.admin.first_name }} {{ staff.admin.last_name }}</p>-->
+        <hr>
+      </div>
+      <h5>
+        {% if messages %}
+        <!--<div class="col-12">-->
+        {% for message in messages %}
+      
+        {% if message.tags == 'error' %}
+        <h5 style="color: red;">{{message}}</h5>
+        {% endif %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+        <!--</div>-->
+        {% endif %}
+      </h5>
+
+
+      <div class="row">
+        
+        <!--<h5>Update Staff:{{ staff.admin.first_name }} {{ staff.admin.last_name }}</h5>-->
+        <!-- /.card-header -->
+        <!-- form start -->
+        {% url 'edit_staff_save' as action_path %}
+        {% include 'hod_templates/edit_staff_form.html' with messages=messages form=form action_path=action_path button_text="Update Staff"%}
+
+        
+
+      </div>
+
+    </div>
+  </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+{% endblock main_content %}

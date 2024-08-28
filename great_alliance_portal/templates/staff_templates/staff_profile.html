@@ -1,0 +1,119 @@
+{% extends 'staff_templates/base_template.html' %}
+{% block main_content %}
+{% load static %}
+<div class="super_container" data-aos="">
+                <h6 class="add-head"><b>Review & check to make sure your profile is up to date.</b></h6>
+
+                <div class="centered-select">
+                    {% if messages %}
+                    <div class="col-12">
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                    <div class="container" data-aos=""
+                    style="box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                        <form role="form" style="margin-top: 20px; margin-bottom: 10px;"
+                        action="{% url 'edit_staff_profile_save' %}" method="post">
+                            {% csrf_token %}
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <img src="{{ staff.staff_profile_pic }}" class="img-fluid"
+                                alt="staff profile pic" style="box-shadow: 2px 4px 8px 0px gray;
+                                border-radius: 10px; height: 180px; width: 180px;">
+                            </div>
+                            <div class="col-lg-8 pt-4 pt-lg-0 content">
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <ul style="list-style: none; margin-bottom: 25px;">
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Username:</strong>
+                                                <input type="text" class="form-control" name="username" value="{{ user.username }}" disabled="disabled">
+                                            </li><br>
+
+                                            <li><i class="bi bi-rounded-right"></i> <strong>First Name:</strong>
+                                                 <input type="text" class="form-control"
+                                                  name="first_name" value="{{ user.first_name }}" disabled="disabled"></li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Other Name(s):</strong>
+                                                <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Personal Email:</strong>
+                                                <input type="text" class="form-control" name="email" value="{{ user.email }}">
+                                            </li><br>
+                                            <!--<li><i class="bi bi-rounded-right"></i> <strong>Personal Email:</strong>
+                                                <input type="text" class="form-control" name="email2" value="{{ staff.email2 }}">
+                                            </li><br>-->
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Date of Birth:</strong>
+                                                <input type="text" class="form-control" name="age" value="{{ staff.date_of_birth }}" disabled="disabled">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <ul style="list-style: none; margin-bottom: 25px;">
+
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Gender:</strong>
+                                                <input type="text" class="form-control" name="gender" value="{{ staff.gender }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Phone Number:</strong>
+                                                <input type="tel" class="form-control" name="phone_number" value="{{ staff.phone_number }}"
+                                                 pattern="[0-9]+" maxlength="10">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Postal Address:</strong>
+                                                <input type="text" class="form-control" name="address1" value="{{ staff.address1 }}">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Residential Address:</strong>
+                                                <input type="text" class="form-control" name="address2" value="{{ staff.address2 }}">
+                                            </li><br>
+                                            <!--<li><i class="bi bi-rounded-right"></i> <strong>Change Password?:</strong>
+                                                <input type="password" class="form-control" name="password"
+                                                placeholder="Enter new password.">
+                                            </li>-->
+                                        </ul>
+                                    </div>
+
+                                        <button id="update-button" type="submit" class="btn btn-secondary">Update Profile</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        </form>
+                    </div>
+
+
+        </div>
+<style>
+    #update-button {
+        width: 200px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .add-head{
+        margin-left: 50px;
+        margin-top: 15px;
+    }
+
+    @media (max-width: 600px){
+        .add-head {
+            margin-left: 12px;
+
+        }
+
+        #update-button {
+            margin-right:auto;
+            margin-left: auto;
+            width: 170px;
+        }
+        .row {
+            width: 100%;
+
+        }
+    }
+</style>
+{% endblock main_content %}

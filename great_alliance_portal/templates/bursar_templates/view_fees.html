@@ -1,0 +1,205 @@
+{% extends "bursar_templates/base_template.html" %}
+{% block main_content %}
+{% load humanize %}
+<div class="super_container">
+    <div class="results-container">
+        {% if fees_by_level %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <h5 style="margin-top:30px; text-align: center;"><b>{{ student_level.level_name }}</b></h5>
+                        <!-- Student Payment Summary -->
+                        <div class="d-flex justify-content-around my-3">
+                            <span>Students with Full Payments: <strong>{{ students_with_full_payment_count }}</strong></span>
+                            <span>Students with Outstanding Balances: <strong>{{ students_owing_count }}</span></strong>
+                        </div>
+                        <!-- Search Form and Download Button -->
+                        <div class="d-flex justify-content-between align-items-center mb-3" style="margin-right:30px; margin-left:30px;">
+                            <a href="{% url 'download_student_bills' student_level.id %}" class="btn btn-success mb-2">Download Bills</a>
+                            <div class="form-group mb-2 ml-2">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Search for a student...">
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive p-0 mb-3">
+                            <table class="table table-bordered table-striped">
+                                <thead style="font-size:14px;">
+                                    <tr>
+                                        <th>Student Name</th>
+                                        <th>Fee for Current Term</br>GH₵</th>
+                                        <th>Arrears From Last Term</br>GH₵</th>
+                                        <th>Amount Due Debit</br>GH₵</th>
+                                        <th>Advance Payment</br>GH₵</th>
+                                        <th>Payment</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="feesTable" style="font-size:14px;">
+                                    {% for student, fees in fees_by_level.items %}
+                                        {% for fee in fees %}
+                                            <tr>
+                                                <td style="text-align:left;">
+                                                    {% if fee.overall_fees == 0 %}
+                                                        <span style="color: blue; font-size: 16px;">✔️</span>
+                                                    {% endif %}
+                                                    {{ forloop.parentloop.counter }}. {{ student.admin.last_name|upper }} {{ student.admin.first_name }}
+                                                </td>
+                                                <td>{{ fee.total_fees|intcomma }}</td>
+                                                <td>{{ fee.arrears_from_last_term|intcomma }}</td>
+                                                <td><b>{{ fee.overall_fees|intcomma }}</b></td>
+                                                <td> {{ fee.balance_carry_forward|intcomma }}</td>
+                                                <td>
+                                                <a href="{% url 'update_fees' fee.id %}" style="text-decoration: none;">
+                                                    <i class="fas fa-hand-holding-usd" style="font-size: 20px; color: black;"></i>
+                                                </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div id="noResults" class="alert alert-warning" style="display: none; text-align: center; margin-left:50px; width:300px;">
+                                No student with such name.
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 15px;">
+                        <a href="{% url 'bursar_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="form-group" style="text-align: center; font-size: large; font-style: normal; font-weight: bolder;">
+            <div id="error_results" style="display:none; color: red;"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 7px;
+    }
+    .results-container {
+        padding: 20px;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
+        margin-top: 15px;
+        max-width: 100%;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .table {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+    .centered-select {
+        text-align: center;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+
+    .form-inline .form-control {
+        width: auto;
+        display: inline-block;
+    }
+
+    .form-inline .btn-primary {
+        margin-right: auto;
+    }
+
+    /* Additional styling for mobile responsiveness */
+    @media (max-width: 600px) {
+        /*.d-flex {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .d-flex > * + * {
+            margin-top: 10px;
+        }*/
+        .card {
+            max-width: 100%;
+            width: 100%;
+            width: 800px;
+            margin-right: 0px;
+            right: 0px;
+            left: 0px;
+            margin-left: 0px;
+        }
+        .super_container {
+            max-width: 100%;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            right: 0px;
+            left: 0px;
+        }
+        .results-container {
+            max-width: 100%;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            right: 0px;
+            left: 0px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const feesTable = document.getElementById('feesTable');
+        const noResults = document.getElementById('noResults');
+        const rows = feesTable.getElementsByTagName('tr');
+
+        searchInput.addEventListener('keyup', function() {
+            const query = searchInput.value.toLowerCase();
+            let found = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const nameCell = cells[0];
+                if (nameCell) {
+                    const name = nameCell.textContent.toLowerCase();
+                    if (name.indexOf(query) > -1) {
+                        rows[i].style.display = '';
+                        found = true;
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            }
+
+            noResults.style.display = found ? 'none' : 'block';
+        });
+    });
+</script>
+
+{% endblock main_content %}

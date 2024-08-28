@@ -1,0 +1,196 @@
+{% extends "bursar_templates/base_template.html" %}
+{% block main_content %}
+{% load humanize %}
+<div class="super_container">
+    <div class="results-container">
+        <form method="GET" action="{% url 'daily_payments' %}">
+            <div class="form-inline justify-content-center mb-3">
+                <div class="form-group mb-2">
+                    <label for="academic_year" class="mr-2" style="color: black;">Academic Year:</label>
+                    <select name="academic_year" id="academic_year" class="form-control" style="color: black; text-align: center;" required>
+                        <option value="">-----------</option>
+                        {% for year in academic_years %}
+                            <option value="{{ year }}" {% if year == current_academic_year %}selected{% endif %}>
+                                {{ year }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mb-2 ml-3">
+                    <label for="semester" class="mr-2" style="color: black;">Term:</label>
+                    <select name="semester" id="semester" class="form-control" style="color: black; text-align: center;" required>
+                        <option value="">-----------</option>
+                        {% for sem in semesters %}
+                            <option value="{{ sem }}" {% if sem == current_semester %}selected{% endif %}>
+                                {{ sem }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success mb-2 ml-3">Display Payments</button>
+            </div>
+        </form>
+        {% if daily_records %}
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card" style="margin-top:15px;">
+                        <h5 style="margin-top:10px; text-align: center;"><b>Payments</b></h5>
+
+                        <!-- Search Form -->
+                        <div class="form-inline justify-content-between mb-3" style="margin-right:30px; margin-left:30px;">
+                            <div class="form-group mb-2">
+                                <input type="text" id="searchDate" style="width:240px;" class="form-control" placeholder="Search by date (e.g.July 27, 2024)">
+                            </div>
+                            <div class="form-group mb-2">
+                                <input type="text" id="searchStudent" style="width:240px;" class="form-control" placeholder="Search by student name">
+                            </div>
+                        </div>
+
+                        <!-- Payments Table -->
+                        <div id="paymentsTableContainer" class="card-body table-responsive p-0 mb-3">
+                            <table class="table table-bordered table-hover table-striped" style="margin: 0 auto; width: 90%;">
+                                    <thead style="font-size:14px;">
+                                        <tr>
+                                            <th colspan="2">Total Payments for {{ current_semester }}, {{ current_academic_year }} Academic Year</th>
+                                        </tr>
+                                        <tr>
+
+                                            <th colspan="2"><b>GH₵ {{ overall_payment_total|floatformat:2|intcomma }}</b></th>
+                                        </tr>
+                                    </thead>
+                            </table>
+
+                            {% for date, records in daily_records.items %}
+                                <table class="table table-bordered table-hover table-striped" style="margin: 0 auto; width: 90%;">
+                                    <thead style="font-size:14px;">
+                                        <tr>
+                                            <th colspan="3">Payments for {{ date }} </td>
+
+                                        </tr>
+                                        <tr>
+                                            <!--<th>Payments for {{ date }}</th>-->
+                                            <th>Student Name</th>
+                                            <th>Class</th>
+                                            <th>Amount Paid GH₵</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size:14px;">
+                                        {% for record in records.students %}
+                                            <tr>
+                                                <td style="text-align:left;">{{ forloop.counter }} . {{ record.student_last_name|upper }} {{ record.student_first_name }}</td>
+                                                <td>{{ record.student_level }}</td>
+                                                <td>{{ record.total_paid|floatformat:2|intcomma }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td></td>
+                                            <td style="text-align:right;"><b>TOTAL:</b></td>
+                                            <td><b>{{ records.total_paid|floatformat:2|intcomma }}<b></td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            {% endfor %}
+                            <div id="noResults" class="alert alert-warning" style="display: none; text-align: center; margin-left: auto; margin-right: auto; width:300px;">
+                                <h5>No Payment Records Available</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <div class="centered-select" style="margin-top: 20px;">
+            <h6 class="alert alert-danger">No payments records available for the selected Academic Year and Term.</h6>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .results-container {
+        padding: 20px;
+        margin-top: 40px;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+    @media (max-width: 600px) {
+        .super_container {
+            max-width: 100%;
+            width: 100%;
+            left: 0px;
+            margin-left: 0px;
+        }
+        .results-container {
+            max-width: 100%;
+            width: 100%;
+            left: 0px;
+            margin-left: 0px;
+        }
+    }
+    .table {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    .table th, .table td {
+        text-align: center;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchDateInput = document.getElementById('searchDate');
+        const searchStudentInput = document.getElementById('searchStudent');
+        const paymentsTableContainer = document.getElementById('paymentsTableContainer');
+        const noResults = document.getElementById('noResults');
+
+        function filterPayments() {
+            const searchDate = searchDateInput.value.trim().toLowerCase();
+            const searchStudent = searchStudentInput.value.trim().toLowerCase();
+            const tables = paymentsTableContainer.querySelectorAll('table');
+            let found = false;
+
+            tables.forEach(table => {
+                const dateHeader = table.querySelector('thead th').textContent.trim().toLowerCase();
+                const rows = table.querySelectorAll('tbody tr');
+
+                let dateMatches = !searchDate || dateHeader.includes(searchDate);
+                let studentFoundInTable = false;
+
+                rows.forEach(row => {
+                    const studentNameCell = row.querySelector('td:first-child');
+                    if (studentNameCell) {
+                        const studentName = studentNameCell.textContent.trim().toLowerCase();
+                        const studentMatches = !searchStudent || studentName.includes(searchStudent);
+                        if (dateMatches && studentMatches) {
+                            row.style.display = '';
+                            found = true;
+                            studentFoundInTable = true;
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
+                });
+
+                table.style.display = studentFoundInTable ? '' : 'none';
+            });
+
+            noResults.style.display = found ? 'none' : 'block';
+        }
+
+        searchDateInput.addEventListener('input', filterPayments);
+        searchStudentInput.addEventListener('input', filterPayments);
+    });
+</script>
+
+{% endblock main_content %}

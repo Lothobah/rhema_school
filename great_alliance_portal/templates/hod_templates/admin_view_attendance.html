@@ -1,0 +1,205 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+    <div class="super_container" style="background: #f3f5f8; display: flex; flex-direction: column; min-height: 100vh;">
+        <div id="attend">
+        <h6 id="add-head"><b>View Attendance for the {{ current_academic_year }} Academic Year.</b></h6>
+        <div class="centered-select" style="margin-top:15px;">
+            <label style="color: black;">Select Class</label>
+            <div class="select-wrapper">
+                <select class="form-control" name="student_level" id="student_level">
+                    {% for student_level in student_levels %}
+                    <option value="{{ student_level.id }}">{{ student_level.level_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="centered-select" style="margin-top:15px; display:none;">
+            <div class="select-wrapper">
+                <select class="form-control" name="academic_year" id="academic_year" disabled>
+                    {% for academic_year in academic_years %}
+                    <option value="{{ academic_year.id }}" {% if academic_year.id == current_academic_year.id %}selected{% endif %}>
+                        {{ academic_year.academic_year }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="centered-select" style="margin-top:15px;">
+            <label style="color: black;">Select Term</label>
+            <div class="select-wrapper">
+                <select class="form-control" name="semester" id="semester">
+                    {% for semester in semesters %}
+                    <option value="{{ semester.id }}">{{ semester.semester }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group mt-3 d-flex align-items-center justify-content-start" id="back-top">
+            <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+            <button type="button" class="btn btn-success" id="fetch_attendance">Fetch Attendance</button>
+        </div>
+    </div>
+        <!-- Attendance data table -->
+        <div id="attendance_data" class="card-body"></div>
+
+    </div>
+
+<style>
+    #back-top {
+        margin-bottom: 70px;
+        margin-top: 30px;
+    }
+    #attend {
+        background: white;
+        width: 550px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px;
+        margin-top: 60px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+    }
+        #sub-button {
+        border-radius: 4px;
+        width: 180px;
+        margin-left: 15px; /* Adjusting the space between the link and button */
+    }
+
+        #return-button {
+            border-radius: 4px;
+            margin-right: 10px;
+            border: 1px solid red;
+            margin-left: 90px;
+        }
+
+        #attendance_data {
+            width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 70px;
+            min-height: 0px; /* Initially no height */
+            transition: min-height 0.25s ease-out; /* Smooth transition for content */
+        }
+
+        /* Ensure select wrapper adapts to the screen size */
+        .select-wrapper {
+            width: 70%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Style the select element */
+        select.form-control {
+            width: 30%;
+            padding: 10px;
+            text-align: center;
+            text-align-last: center;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        /* Adjust for smaller screens */
+        @media (max-width: 600px) {
+            #attend {
+            width: 370px;
+            margin-top: 75px;
+            margin-left: 20px;
+        }
+            #return-button {
+            border-radius: 4px;
+            margin-right: 10px;
+            margin-left: 5px;
+        }
+            #sub-button {
+                margin-left: 5px;
+                width: 160px;
+            }
+            select.form-control {
+                width: 60%;
+                font-size: 16px;
+                line-height: 1.5;
+                height: auto;
+                padding: 7px;
+            }
+
+            #attendance_data {
+                margin-left: 0px;
+                left: 0px;
+                width: 300px;
+            }
+        }
+
+        #add-head {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .super_container {
+            width: calc(100% - 50px);
+            min-height: 100vh;
+            background: rgba(0, 128, 128, 0.062);
+            margin-left: 60px;
+            margin-right: 15px;
+            transition: margin-left 0.25s ease-out;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (max-width: 600px) {
+            #add-head {
+                margin-left: 25px;
+            }
+            .super_container {
+                margin-left: 0px;
+                left: 0px;
+            }
+            .container {
+                margin-left: 0px;
+                left: 0px;
+            }
+        }
+    </style>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+    $(document).ready(function () {
+        $("#fetch_attendance").click(function () {
+            var student_level = $("#student_level").val();
+            var academic_year = $("#academic_year").val();
+            var semester = $("#semester").val();
+
+            $.ajax({
+                url: '{% url 'admin_view_attendance' %}',
+                type: 'POST',
+                data: {
+                    student_level: student_level,
+                    academic_year: academic_year,
+                    semester: semester
+                },
+            })
+            .done(function (response) {
+                var json_data = response.attendance_data;
+                var table = "<table class='table table-bordered' style='background: white; margin-top:15px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);'><thead><tr style='background: #f3f5f8'><th>Student Name</th><th style='text-align:center;'>Total Attendance</th><th style='text-align:center;'>Times Present</th><th style='text-align:center;'>Times Absent</th></tr></thead><tbody>";
+                json_data.forEach(function (item, index) {
+                    table += "<tr><td>" + item.last_name +" " + item.first_name + "</td><td style='text-align:center;'>" + item.total_attendance + "</td><td style='text-align:center;'>" + item.attendance_present + "</td><td style='text-align:center;'>" + item.attendance_absent + "</td></tr>";
+                });
+                table += "</tbody></table>";
+                $("#attendance_data").html(table);
+
+                // Dynamically increase the height of the attendance data div
+                $("#attendance_data").css("min-height", "auto");
+            })
+            .fail(function () {
+                alert("An error occurred while fetching attendance data.");
+            });
+        });
+    });
+</script>
+{% endblock custom_js %}

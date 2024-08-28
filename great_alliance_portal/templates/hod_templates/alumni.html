@@ -1,0 +1,245 @@
+{% extends "hod_templates/base_template.html" %}
+{% block main_content %}
+{% load humanize %}
+<div class="super_container">
+    <div class="results-container">
+        <h5 id="mess">
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger" style="width: 300px; font-size: 12px; margin-left: auto; margin-right: auto; text-align: center;">{{ message }}</div>
+            {% endif %}
+            {% if message.tags == 'info' %}
+            <div class="alert alert-info" style="width: 300px; font-size: 12px; margin-left: auto; margin-right: auto; text-align: center;">{{ message }}</div>
+            {% endif %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-danger" style="width: 300px; font-size: 15px; margin-top: 110px; margin-left: auto; margin-right: auto; text-align: center;">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </h5>
+        {% if students %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <h5 style="margin-top:30px; text-align: center;"><b>{{ student_level.level_name }}</b></h5>
+                        <div class="d-flex justify-content-around my-3">
+                            <span id="studentCount">Total Number of Students Who Completed: <strong>{{ student_count }}</strong></span>
+                        </div>
+                        <!-- Search Form and -->
+                        <div class="d-flex justify-content-between align-items-center mb-3" id="search-div">
+                            <div class="form-group mb-2 ml-2">
+                            <form method="GET" action="{% url 'alumni' %}">
+                             <div class="input-group">
+                                <!-- Input field -->
+                                <input type="text" id="searchDate" class="form-control" placeholder="Completion Year" name="year" value="{{ year_query }}">
+
+                                <!-- Search button with Font Awesome icon -->
+                                <button class="btn btn-success" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                             </div>
+                            </form>
+                            </div>
+                            <div class="form-group mb-2 ml-2">
+                                <input type="text" id="searchInput" class="form-control" placeholder="Student Name">
+                            </div>
+                        </div>
+
+                        <div class="card-body table-responsive p-0 mb-3">
+                            <table class="table table-bordered table-striped">
+                                <thead style="font-size:14px;">
+                                    <tr>
+
+                                        <th>Student Name</th>
+                                        <th>Home Town</th>
+                                        <th>Completion Date</th>
+                                        <!--<th>Action</th>-->
+
+                                    </tr>
+                                </thead>
+                                <tbody id="feesTable" style="font-size:14px;">
+                                        {% for student in students %}
+                                            <tr>
+                                                <td style="text-align:left;">
+
+                                                    {{ student.admin.last_name|upper }} {{ student.admin.first_name }}
+                                                </td>
+                                                <td>{{ student.home_town }}</td>
+                                                <td>{{ student.promotion_date|date:"F d, Y" }}</td>
+                                                <!--<td>
+                                                    <form method="POST" action="{% url 'delete_student' student.admin.id %}"
+                                                    onclick="return confirm('Are you certain you want to disenroll {{ student.admin.first_name }} {{ student.admin.last_name }} from the school? This action is permanent and cannot be undone.')">
+                                                    {% csrf_token %}
+                                                    <button type="submit" name="delete" class="btn btn-danger" style="border: none; background: none;">
+                                                    <i class="fas fa-trash-alt" style="font-size: 20px; color: red;"></i>
+                                                </button>
+                                                </form>
+                                                </td>-->
+
+                                            </tr>
+                                        {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <div id="noResults" class="alert alert-warning" style="display: none; text-align: center; margin-left: auto; margin-right: auto; margin-top: 25px; width:300px;">
+                                No student matching the provided name.
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 15px;">
+                        <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+        <div class="form-group" style="text-align: center; font-size: large; font-style: normal; font-weight: bolder;">
+            <div id="error_results" style="display:none; color: red;"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #searchDate::placeholder {
+        text-align: left;
+    }
+    #search-div {
+        margin-left: 38px;
+        margin-right: 45px;
+    }
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 7px;
+    }
+    .results-container {
+        padding: 20px;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
+        margin-top: 15px;
+        max-width: 100%;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .table {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+    .centered-select {
+        text-align: center;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+
+    .form-inline .form-control {
+        width: auto;
+        display: inline-block;
+    }
+
+    .form-inline .btn-primary {
+        margin-right: auto;
+    }
+
+    /* Additional styling for mobile responsiveness */
+    @media (max-width: 600px) {
+        #search-div {
+            margin-left: 0px;
+            margin-right: 8px;
+        }
+        #searchInput {
+            margin-right: 0px;
+            right: 0;
+
+        }
+
+        .card {
+            max-width: 100%;
+            width: 100%;
+            width: 800px;
+            margin-right: 0px;
+            right: 0px;
+            left: 0px;
+            margin-left: 0px;
+        }
+        .super_container {
+            max-width: 100%;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            right: 0px;
+            left: 0px;
+        }
+        .results-container {
+            max-width: 100%;
+            width: 100%;
+            margin-right: 0px;
+            margin-left: 0px;
+            right: 0px;
+            left: 0px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const feesTable = document.getElementById('feesTable');
+        const noResults = document.getElementById('noResults');
+        const rows = feesTable.getElementsByTagName('tr');
+
+        searchInput.addEventListener('keyup', function() {
+            const query = searchInput.value.toLowerCase();
+            let found = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const nameCell = cells[0];
+                if (nameCell) {
+                    const name = nameCell.textContent.toLowerCase();
+                    if (name.indexOf(query) > -1) {
+                        rows[i].style.display = '';
+                        found = true;
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            }
+
+            noResults.style.display = found ? 'none' : 'block';
+        });
+    });
+
+
+
+
+</script>
+
+{% endblock main_content %}

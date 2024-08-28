@@ -1,0 +1,138 @@
+{% extends "staff_templates/base_template.html" %}
+{% load static %}
+{% block main_content %}
+			<div class="container" id="home-container" style="background: white;">
+				<h5 style="color: black; text-align:centre;"><span id="greeting-message"></span> {{ staff.title }} {{ staff.admin.last_name }}</h5>
+				<div class="row">
+                    <!--
+					<div class="col-lg-4 hero_box_col">
+            <a href="{% url 'staff_add_result' %}"class="hero_box_link" style="text-decoration: none;">
+						<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+							<img src="{% static "images/add_student_result.png" %}" class="svg" alt="">
+							<div class="hero_box_content">
+								<h6 style="text-align:left;" class="hero_box_title">Add Results</h6>
+								 Click to add students terminal results.
+							</div>
+						</div></a>
+					</div>
+
+					<div class="col-lg-4 hero_box_col">
+            <a href="{% url 'staff_view_all_results' %}" class="hero_box_link" style="text-decoration: none;">
+						<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+							<img src="{% static "images/check results.png" %}" class="svg" alt="">
+							<div class="hero_box_content">
+								<h6 style="text-align:left;" class="hero_box_title">Results</h6>
+								Click to access students results.
+							</div>
+						</div>
+						</a>
+					</div>-->
+					<div class="col-lg-4 hero_box_col">
+						<a href="{% url 'staff_view_students_by_level' %}" class="hero_box_link" style="text-decoration: none;">
+									<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+										<img src="{% static "images/assessment.png" %}" class="svg" alt="">
+										<div class="hero_box_content">
+											<h6 style="text-align:left;" class="hero_box_title">Student Assessment.</h6>
+											Click to access students Assessments.
+										</div>
+									</div>
+									</a>
+								</div>
+
+						<div class="col-lg-4 hero_box_col">
+						<a href="{% url 'enroll_students' %}" class="hero_box_link" style="text-decoration: none;">
+									<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+										<img src="{% static "images/course_enroll.png" %}" class="svg" alt="">
+										<div class="hero_box_content">
+											<h6 style="text-align:left;" class="hero_box_title">Subject Registration</h6>
+											Click to enroll students in the subjects you teach.
+										</div>
+									</div>
+									</a>
+								</div>
+
+
+					{% if staff_assigned_to_a_level %}
+						<div class="col-lg-4 hero_box_col">
+							<a href="{% url 'staff_take_attendance' %}" class="hero_box_link" style="text-decoration: none;">
+							<div  class="hero_box d-flex flex-row align-items-center justify-content-start">
+								<img src="{% static "images/attendance.png" %}" class="svg" alt="">
+								<div class="hero_box_content">
+									<h6 style="text-align:left;" class="hero_box_title">Take Attendance</h6>
+									Click to take attendance for a class.
+								</div>
+							</div>
+							</a>
+						</div>
+
+
+          				<div class="col-lg-4 hero_box_col">
+            				<a href="{% url 'staff_update_attendance' %}" class="hero_box_link" style="text-decoration: none;">
+							<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+								<img src="{% static "images/view_attendance.png" %}" class="svg" alt="">
+							<div class="hero_box_content">
+								<h6 style="text-align:left;" class="hero_box_title">Attendance</h6>
+								Click to view student attendance.
+							</div>
+							</div>
+							</a>
+						</div>
+						{% endif %}
+		</div>
+	</div>
+
+<style>
+    .hero_box {
+            background: #f3f5f8;
+        }
+        .hero_box:hover {
+        	color: #1a1a1a;
+        	border: 2px solid gray;
+
+    }
+    .home-container {
+        margin-left: 0px;
+
+    }
+    .container {
+        margin-left: 60px;
+        margin-top: 16px;
+        background: white;
+}
+.row {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    background: white;
+}
+
+    @media (max-width: 600px) {
+	.add-head {
+		margin-left: 15px;
+	}
+	.container{
+	    margin-left: 0px;
+	    left: 0px;
+	}
+}
+</style>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const greetingElement = document.getElementById('greeting-message');
+    const currentHour = new Date().getHours();
+    let greeting = '';
+
+    if (currentHour < 12) {
+        greeting = 'Good Morning,';
+    } else if (currentHour < 18) {
+        greeting = 'Good Afternoon,';
+    } else {
+        greeting = 'Good Evening,';
+    }
+
+    greetingElement.textContent = greeting;
+});
+</script>
+{% endblock custom_js %}

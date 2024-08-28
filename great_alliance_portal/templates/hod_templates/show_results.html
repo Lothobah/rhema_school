@@ -1,0 +1,220 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+{% load static %}
+    <!-- Display results -->
+    <div class="results-container">
+        {% if student_data %}
+            <div class="row">
+                {% for student, data in student_data.items %}
+                    <div class="col-md-12">
+                        <div class="card">
+                            <h6><b>{{ forloop.counter }} . {{ data.student.admin.last_name|upper }} {{ data.student.admin.first_name }}</b></h6>
+                            <div class="card-body table-responsive p-0 mb-3">
+
+                                <table class="table table-hover table-striped">
+                                    <thead style="font-size:14px;">
+                                        <tr>
+                                            <th style="text-align: center;" colspan="7">TOTAL MARKS: {{ data.total_marks|floatformat:0 }} - POSITION: {{ data.overall_position }}</th>
+                                            <!--<th>Position: {{ data.overall_position }}</th>-->
+                                        </tr>
+                                        <tr style="background: #f3f5f8">
+                                            <th style="text-align: left;">Subject</th>
+                                            <!--<th>Indiv.Test</th>
+                                            <th>Group Work</th>
+                                            <th>Class Test</th>
+                                            <th>Project</th>-->
+                                            <th>Class Score</br>50%</th>
+                                            <th>Exams Score</br>50%</th>
+                                            <th>Total</br>100%</th>
+                                            <th>Position</br>in Subject</th>
+                                            <th>Grade</th>
+                                            <th>Remark</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size:14px;">
+                                        {% for result in data.results %}
+                                            <tr>
+                                                <td data-label="Course" style="text-align: left;">{{ result.course_id.course_name|upper }}</td>
+                                                <!--<td data-label="Individual Test">{{ result.individual_test_score|floatformat:0 }}</td>
+                                                <td data-label="Group Work">{{ result.group_work_score|floatformat:0 }}</td>
+                                                <td data-label="Class Test">{{ result.class_test_score|floatformat:0 }}</td>
+                                                <td data-label="Project">{{ result.project_score|floatformat:0 }}</td>-->
+                                                <td data-label="Assignment Mark">{{ result.assignment_mark|floatformat:0 }}</td>
+                                                <td data-label="Exam Mark">{{ result.exam_mark|floatformat:0 }}</td>
+                                                <td data-label="Total Mark">{{ result.total_mark|floatformat:0 }}</td>
+                                                <td data-label="Course Position">{{ result.course_position }}</td>
+                                                <td data-label="Grade">{{ result.grade }}</td>
+                                                <td data-label="Remark">{{ result.remark }}</td>
+
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 30px;">
+            <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+        </div>
+        <div class="form-group" style="text-align: center; font-size: large; font-style: normal; font-weight: bolder;">
+            <div id="error_results" style="display:none; color: red;"></div>
+        </div>
+    </div>
+
+<style>
+    #sub-button {
+        border-radius: 4px;
+        width: 180px;
+        margin-left: 15px; /* Adjusting the space between the link and button */
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+
+    }
+    /* Ensure select wrapper adapts to the screen size */
+    .select-wrapper {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Style the select element */
+    select.form-control {
+        width: 40%;
+        padding: 10px; /* Adjust the padding for better spacing */
+        text-align: center; /* Center the text in the select box */
+        text-align-last: center; /* Ensure selected text is also centered */
+        appearance: none; /* Remove default styling for a more consistent look */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    /* Ensure text fits within the field without wrapping */
+    option {
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+
+    /* Adjust for smaller screens */
+    @media (max-width: 600px) {
+        select.form-control {
+            width: 60%;
+            font-size: 16px; /* Make the text more readable */
+            line-height: 1.5;
+            height: auto;
+            padding: 7px;
+        }
+    }
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 50px;
+        margin-left: 75px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+    #add-form {
+         background: white;
+         width: 550px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-bottom: 90px;
+         margin-top: 60px;
+         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+         border-radius: 6px;
+    }
+    .results-container {
+        padding: 20px;
+        margin-top: 20px;
+        margin-left: 60px;
+    }
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        margin-top: 40px;
+    }
+    @media (max-width: 600px) {
+        #sub-button {
+            margin-left: 2px;
+            width: 160px;
+        }
+        #add-form {
+            width: 370px;
+            margin-top: 75px;
+            margin-left: 20px;
+        }
+    	.results-container {
+    		margin-left: 0px;
+	}
+    	#add-head {
+    	    margin-left: 7px;
+    	    text-align: center;
+    	    margin-top: 70px;
+	}
+        .results-container {
+            margin-left: 0px;
+        }
+        .add-head {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        text-align: center;
+    }
+
+    .centered-select {
+        text-align: center;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+    }
+</style>
+
+{% endblock main_content %}
+{% block custom_js %}
+
+{% endblock custom_js %}

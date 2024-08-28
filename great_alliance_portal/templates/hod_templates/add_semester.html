@@ -1,0 +1,57 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+<main id="main">
+    <section id="services" class="services section-bg" style="margin-top: 100px;
+    background: white;">
+        <div class="container">
+
+            <div class="row">
+                <div class="form-style-5">
+                    <form action="add_semester_save" method="post" role="form" class="">
+                        {% csrf_token %}
+                        <fieldset>
+                            
+                                <h5>
+                                    {% if messages %}
+                                    <!--<div class="col-12">-->
+                                    {% for message in messages %}
+                                
+                                    {% if message.tags == 'error' %}
+                                    <h5 style="color: red;">{{message}}</h5>
+                                    {% endif %}
+                                    {% if message.tags == 'success' %}
+                                    <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <!--</div>-->
+                                    {% endif %}
+                                </h5>
+                            <legend><span class="number">+</span>Add Semester.</legend>
+                            
+                            <select class="form-control" name="semester" required placeholder="Semester" style="text-align: center;">
+                                <option value="One">One</option>
+                                <option value="Two">Two</option>
+                                <option value="Three">Three</option>
+
+                            </select>
+                            <ul>
+                                {% for semester in semester %}
+                                    <li>{{ semester.semester }}</li>
+                                {% endfor %}
+                            </ul>
+                            
+                
+                        </fieldset>
+                
+                        <button type="submit" value="Apply" class="form-control">Submit</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+{% endblock main_content %}

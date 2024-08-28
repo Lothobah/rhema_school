@@ -1,0 +1,149 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+{% load static %}
+<div class="super_container">
+
+    <div class="container" data-aos="fade-up" style="box-shadow: 0 4px 8px rgba(0,0,0,0.1); background: #f3f5f8">
+
+          <!--</div>-->
+          <!-- /.card-body -->
+
+
+      <form role="form" action="{% url 'edit_admin_profile_save' %}" method="post"
+      style="margin-top: 45px; margin-bottom: 75px;" id="stu-form">
+        {% csrf_token %}
+        <h6 id="add-head"><b>Review & check to make sure your profile is up to date.</b></h6>
+        <div class="row">
+            <div class="form-group">
+              {% if messages %}
+              <div class="col-12">
+                {% for message in messages %}
+                {% if message.tags == 'error' %}
+                <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+                {% endif %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" id="success">{{message}}</div>
+                {% endif %}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          <!--<div class="col-lg-4">
+            <img src="{% static "assets/img/about.jpg" %}" class="img-fluid" alt="staff profile pic" style="box-shadow: 2px 4px 8px 0px gray;
+            border-radius: 10px; height: 170px;">
+          </div>-->
+          <div class="col-lg-8 pt-4 pt-lg-0 content">
+            <!--<h3>Illustrator &amp; UI/UX Designer</h3>
+                                      <p class="fst-italic">
+                                         koo
+                                      </p>-->
+            <div class="row">
+              <div class="col-lg-6">
+                <ul style="list-style: none;">
+                  <li><i class="bi bi-rounded-right"></i> Username:
+                    <input type="text" class="form-control" name="username" value="{{ user.username }}" disabled="disabled">
+                  </li><br>
+                  <li><i class="bi bi-rounded-right"></i> Surname:
+                    <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}"
+                      >
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul style="list-style:none;">
+                  <li><i class="bi bi-rounded-right"></i> Other Name(s):
+                    <input type="text" class="form-control" name="first_name"
+                    value="{{ user.first_name }}" placeholder="Enter First Name first.">
+                  </li><br>
+                  <li><i class="bi bi-rounded-right"></i> Email:
+                    <input type="text" class="form-control" name="email" value="{{ user.email }}">
+                  </li><br>
+
+
+                </ul>
+
+              </div>
+              <button id="update-button" type="submit" class="btn btn-secondary">Update Profile</button>
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+</div>
+<style>
+    #success {
+        margin-left: 90px;
+        margin-top: 20px;
+        width: 280px;
+    }
+    #stu-form {
+        margin-left: 150px;
+        margin-top: 50px;
+    }
+    .container {
+        margin-top: 60px;
+    }
+    #update-button {
+        width: 160px;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 40px;
+    }
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 40px;
+        margin-left: 60px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+        margin-bottom: 40px;
+    }
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+
+    @media (max-width: 600px){
+        #success {
+            margin-left: 30px;
+        }
+        #add-head {
+            color: black;
+            text-align: center;
+            margin-right: auto;
+            margin-left: auto;
+
+        }
+
+        #update-button {
+            margin-right:auto;
+            margin-left: auto;
+            width: 170px;
+        }
+        .row {
+            width: 100%;
+
+        }
+        .container {
+            margin-left: 12px;
+            width: 380px;
+            margin-right: 12px;
+
+        }
+        #stu-form {
+            margin-left: 0px;
+        }
+    }
+</style>
+{% endblock main_content %}

@@ -1,0 +1,113 @@
+{% extends 'staff_templates/base_template.html' %}
+
+{% block main_content %}
+<div class="super_container">
+    <h6 class="add-head"><b>Subject Registration.</b></h6>
+    <form method="post" enctype="multipart/form-data" id="enroll-form">
+        {% csrf_token %}
+        <div class="card-body">
+            <div class="centered-select" style="margin-top: 1px;">
+                <h6 style="font-size:12px;">
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <div class="alert alert-danger" style="margin-top: 10px;">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success" style="margin-top: 10px; text-align: center;">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </h6>
+                <label for="{{ form.course.id_for_label }}" style="color: black;">Select Subject</label>
+                <div class="select-wrapper">
+                {{ form.course|safe }}
+                </div>
+            </div>
+
+            <div class="form-group" style="margin: 25px; background: #f3f5f8;">
+                <div id="students-container" class="row" style="">
+                    <!-- Students checkboxes will be inserted here by JavaScript -->
+                </div>
+            </div>
+            <div class="centered-select" style="margin-top: 25px;">
+                <button type="submit" class="btn btn-secondary" id="enroll-button" style="display: none;">Enroll Students</button>
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+    #students-container {
+        margin-left: 30px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+        color:black;
+        margin-top: 50px;
+        padding: 25px 0 25px 0;
+        align-items: left;
+    }
+    .add-head {
+        margin-top: 90px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .super_container {
+        background: white;
+        margin-left: 30px;
+    }
+    @media (max-width: 600px){
+        .add-head {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #students-container{
+            padding-top: 25px;
+
+        }
+    }
+</style>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const courseSelect = document.querySelector('select[name="course"]');
+    const studentsContainer = document.getElementById('students-container');
+    const enrollButton = document.getElementById('enroll-button');
+
+    courseSelect.addEventListener('change', function () {
+        const courseId = this.value;
+
+        if (courseId) {
+            fetch(`/get_students_for_course/${courseId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    studentsContainer.innerHTML = '';
+                    if (data.students.length > 0) {
+                        data.students.forEach((student, index) => {
+                            const div = document.createElement('div');
+                            div.classList.add('col-md-4', 'mb-2');
+                            div.innerHTML = `
+                                <div class="form-check">
+                                    <input type="checkbox" checked="checked" name="students" value="${student.id}" id="student_${student.id}" class="form-check-input">
+                                    <label class="form-check-label" for="student_${student.id}">
+                                        ${student.last_name} ${student.first_name}
+                                    </label>
+                                </div>
+                            `;
+                            studentsContainer.appendChild(div);
+                        });
+                        enrollButton.style.display = 'block'; // Show the button when students are loaded
+                    } else {
+                        studentsContainer.innerHTML = '<p style="color:red;"><b>No students available for the selected subject.</b></p>';
+                        enrollButton.style.display = 'none'; // Hide the button if no students are available
+                    }
+                });
+        } else {
+            studentsContainer.innerHTML = '<p><b>No students available for the selected subject.</b></p>';
+            enrollButton.style.display = 'none'; // Hide the button if no course is selected
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

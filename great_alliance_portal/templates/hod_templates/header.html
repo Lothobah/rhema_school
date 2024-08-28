@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Great Alliance School Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login to the Great Alliance Portal. Administrator, Staffs, Bursar.">
+    <meta name="keywords" content="Great Alliance JHS Portal, Great Alliance Portal, Great Alliance, great alliance preparatory/JHS, great alliance preparatory/JHS, great alliance staffs portal, Login, great alliance Administrator portal, Staff, Great Alliance School Portal">
+    <meta name="google-site-verification" content="I4LEar18uTN594j0nCsKuRRgSdN8V6LYH3c3KZtDihM" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 40px; /* Adjust based on navbar height */
+            /*background: rgb(239, 247, 247);*/
+            background: #f3f5f8;
+            height: 100%;
+            /*margin: 0;*/
+            padding: 0;
+        }
+
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar-wrapper {
+            position: fixed; /* Fix the sidebar at the top */
+            top: 0;
+            min-height: 100vh;
+            width: 70px; /* Initially show only icons */
+            transition: width 0.25s ease-out;
+            background-color: #f8f9fa; /* Ensure the sidebar has a background color */
+            z-index: 1000; /* Ensure the sidebar is above other content */
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            width: 250px; /* Expand to show icons and text */
+        }
+
+        #page-content-wrapper {
+            margin-left: 70px; /* Adjust margin to accommodate the sidebar width */
+            width: calc(100% - 70px); /* Adjust width considering the sidebar width */
+            padding: 20px;
+        }
+
+        .sidebar-heading {
+            padding: 0.875rem 1.25rem;
+            font-size: 1.2rem;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .sidebar-heading img.school-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            background: white;
+        }
+
+        .list-group-item {
+            padding: 0.75rem 1.25rem;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .list-group-item i {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .list-group-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            position: fixed; /* Fix the navbar at the top */
+            top: 0;
+            left: 70px; /* Adjust to accommodate the sidebar width */
+            width: calc(100% - 70px); /* Adjust width considering the sidebar width */
+            padding: 0.5rem 1.25rem; /* Reduce height by adjusting padding */
+            z-index: 1000; /* Ensure the navbar is above other content */
+        }
+
+        #menu-toggle {
+            font-size: 1.5rem; /* Adjust size as needed */
+            background: none;
+            border: none;
+            color: #fff; /* Set the color to white */
+            cursor: pointer;
+            margin-left: 0; /* Adjust margin to move arrow button */
+        }
+
+        .navbar-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.5rem 1.25rem; /* Reduce padding to decrease height */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .navbar-header img.school-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .navbar-brand img {
+            margin-left: auto;
+        }
+
+        #logout-menu {
+            display: none;
+        }
+
+        #logout-menu.show {
+            display: block;
+        }
+
+        .sidebar-text {
+            display: none;
+        }
+
+        #wrapper.toggled .sidebar-text {
+            display: inline; /* Make the text inline when the sidebar is toggled */
+        }
+
+        @media (max-width: 767.98px) {
+            #sidebar-wrapper {
+                margin-left: -70px; /* Initially hide sidebar */
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            #page-content-wrapper {
+                margin-left: 0; /* Adjust margin for mobile */
+                width: 100%; /* Full width for mobile */
+            }
+
+            .navbar {
+                width: 100%; /* Ensure the navbar spans the full width */
+                padding: 0.5rem 0.5rem; /* Reduce padding for mobile */
+                left: 0;
+            }
+
+            .navbar-header {
+                padding: 0.5rem 0.5rem; /* Reduce padding for mobile */
+            }
+
+            #menu-toggle {
+                font-size: 1.25rem; /* Adjust font size for mobile */
+            }
+            .row {
+                margin-left: 0;
+            }
+            #student_data_container {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading d-flex align-items-center" style="background: white;">
+                <img src="{% static "assets/img/clients/client-4.png" %}" alt="School Logo" class="school-logo">
+            </div>
+            <div class="list-group list-group-flush" style="margin-top:30px;">
+                <a href="{% url 'admin_homepage' %}" class="list-group-item list-group-item-action bg-light" title="Dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                <a href="{% url 'view_staffs' %}" class="list-group-item list-group-item-action bg-light" title="Staff Directory">
+                    <i class="fas fa-address-book"></i>
+                    <span class="sidebar-text">Staff Directory</span>
+                </a>
+                <a href="{% url 'add_student' %}" class="list-group-item list-group-item-action bg-light" title="Student Enrollment">
+                    <i class="fas fa-user-plus"></i>
+                    <span class="sidebar-text">Student Enrollment</span>
+                </a>
+                <a href="{% url 'admin_view_attendance' %}" class="list-group-item list-group-item-action bg-light" title="View Attendance">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span class="sidebar-text">View Attendance</span>
+                </a>
+                <a href="{% url 'admin_view_student_results' %}" class="list-group-item list-group-item-action bg-light" title="Check Results">
+                    <i class="fas fa-poll"></i>
+                    <span class="sidebar-text">Check Results</span>
+                </a>
+                <a href="{% url 'view_students' %}" class="list-group-item list-group-item-action bg-light" title="Student Directory">
+                    <i class="fas fa-address-book"></i>
+                    <span class="sidebar-text">Student Directory</span>
+                </a>
+                <a href="{% url 'update_school_settings' %}" class="list-group-item list-group-item-action bg-light" title="Academic Settings">
+                    <i class="fas fa-cogs"></i>
+                    <span class="sidebar-text">Academic Settings</span>
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="navbar-header d-flex align-items-center" style="background-image: url('{% static "assets/img/king.jpg" %}');">
+                    <button class="btn btn-primary" id="menu-toggle"><i class="fas fa-arrow-right"></i></button>
+                    <!--<img src="{% static "assets/img/clients/client-4.png" %}" alt="School Logo" class="school-logo">-->
+                    <div class="navbar-brand ml-auto d-flex align-items-center">
+                        <img src="{% static "assets/img/clients/client-4.png" %}" alt="Profile" class="rounded-circle" width="30" style="margin-left: auto; cursor: pointer;" id="profile-pic">
+                        <div class="dropdown-menu dropdown-menu-right" id="logout-menu">
+                            <a class="dropdown-item" href="{% url 'admin_profile' %}">Profile</a>
+                            <a class="dropdown-item" href="{% url 'do_logout' %}">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- /#page-content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+        var sidebarToggleHandler = function () {
+            $("#wrapper").toggleClass("toggled");
+            if ($("#wrapper").hasClass("toggled")) {
+                $("#menu-toggle i").removeClass("fa-arrow-right").addClass("fa-arrow-left");
+            } else {
+                $("#menu-toggle i").removeClass("fa-arrow-left").addClass("fa-arrow-right");
+            }
+        };
+
+        // Toggle sidebar when menu toggle button is clicked
+        $("#menu-toggle").click(sidebarToggleHandler);
+
+        // Hide sidebar when clicking outside
+        $(document).click(function(event) {
+            if (!$(event.target).closest("#sidebar-wrapper, #menu-toggle").length) {
+                $("#wrapper").removeClass("toggled");
+                $("#menu-toggle i").removeClass("fa-arrow-left").addClass("fa-arrow-right");
+            }
+        });
+
+        // Ensure the sidebar is collapsed after the page loads
+        $(window).on('load', function () {
+            if ($("#wrapper").hasClass("toggled")) {
+                // Collapse the sidebar after the page has loaded
+                $("#wrapper").removeClass("toggled");
+                $("#menu-toggle i").removeClass("fa-arrow-left").addClass("fa-arrow-right");
+            }
+        });
+
+        // Show/hide logout menu
+        $("#profile-pic").click(function () {
+            $("#logout-menu").toggleClass("show");
+        });
+
+        // Close logout menu when clicking outside
+        $(document).click(function (event) {
+            if (!$(event.target).closest("#profile-pic, #logout-menu").length) {
+                $("#logout-menu").removeClass("show");
+            }
+        });
+    });
+
+    </script>
+</body>
+</html>
+
+

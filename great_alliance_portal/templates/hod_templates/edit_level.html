@@ -1,0 +1,138 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+                    <form action="{% url 'edit_level_save' %}" method="post" role="form" id="add-form">
+                        {% csrf_token %}
+                        <h6 id="add-head"><b>Teacher reassignment to {{ student_level.level_name }}</b></h6>
+                            <div class="centered-select" style="margin-top: 20px;">
+                                <h6 style="font-size:12px;">
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                      {% if message.tags == 'error' %}
+                                        <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+                                      {% endif %}
+                                      {% if message.tags == 'success' %}
+                                        <div class="alert alert-success" style="width: 200px; margin-top: 10px; text-align: center;">{{message}}</div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </h6>
+                            <label for="">Class:</label>
+                            <div class="select-wrapper">
+                                <!-- Visible but disabled input for display -->
+                                <input type="text" name="level_name_display" class="form-control" placeholder="Class"
+                                       value="{{ student_level.level_name }}" disabled style="font-size: 0.9em; text-align: center; text-align-last: center;">
+
+                                <!-- Hidden input for actual form submission -->
+                                <input type="hidden" name="level_name" value="{{ student_level.level_name }}">
+
+                                <input type="hidden" class="form-control" name="student_level_id" value="{{ student_level.id }}">
+                            </div>
+                            </div>
+
+                            <div class="centered-select" style="margin-top: 15px; margin-bottom: 40px;">
+                            <label for="">Select Class Teacher:
+                            </label>
+                            <div class="select-wrapper" id="sel-wrapper">
+                            <select class="form-control" name="staff" style="font-size: 0.9em; text-align: center; text-align-last: center;">
+                              {% for staff in staffs %}
+                              <option value="{{ staff.id}}" {% if staff.id == student_level.staff_id.id %} selected {% endif %}>
+                                {{staff.last_name}} {{staff.first_name}}
+                              </option>
+                              {% endfor %}
+                            </select>
+                            </div>
+                            </div>
+
+                        <!--</fieldset>-->
+                        <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 70px;">
+                            <a href="{% url 'manage_level' %}" class="btn btn-light" id="return-button">&larr; Back</a>
+                            <button type="submit" id="sub-button" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+
+<style>
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 50px;
+        margin-left: 130px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+    #add-form {
+         background: #f3f5f8;
+         width: 550px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-bottom: 30px;
+         margin-top: 60px;
+    }
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 25px;
+    }
+    #sub-button {
+        border-radius: 4px;
+        width: 110px;
+        margin-left: 10px; /* Adjusting the space between the link and button */
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: 1px;
+        border: 1px solid red;
+        margin-left: 145px;
+    }
+       @media (max-width: 600px) {
+        #return-button {
+        margin-left: 75px;
+    }
+        #sub-button {
+            margin-left: 5px;
+            width: 90px;
+        }
+        #add-form {
+            width: 370px;
+            margin-top: 75px;
+        }
+    	.results-container {
+    		margin-left: 0px;
+	}
+    	#add-head {
+    	    margin-left: 60px;
+    	    text-align: center;
+    	    margin-top: 70px;
+	}
+	.select-wrapper {
+	    width: 160px;
+	    margin-left: 10px;
+	}
+	#add-button {
+	    width: 120px;
+	    margin-right: 0px;
+	}
+	#sel-wrapper {
+	    width: 200px;
+	    margin-left: 50px;
+	}
+
+}
+
+  </style>
+
+{% endblock main_content %}

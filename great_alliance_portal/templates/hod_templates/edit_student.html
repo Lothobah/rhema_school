@@ -1,0 +1,28 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+        <div class="container">
+
+            <div class="row">
+                {% url 'edit_student_save' as action_path %}
+                {% include 'hod_templates/edit_student_form.html' with messages=messages form=form action_path=action_path button_text="Update"%}
+
+            </div>
+
+        </div>
+
+<style>
+
+    .add-head {
+        margin-left: 170px;
+        margin-top: 50px;
+        margin-bottom: 2px;
+}
+    @media (max-width: 600px) {
+	.add-head {
+		margin-left: 55px;
+	}
+
+}
+</style>
+
+{% endblock main_content %}

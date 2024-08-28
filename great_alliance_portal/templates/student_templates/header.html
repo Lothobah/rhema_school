@@ -1,0 +1,48 @@
+{% load static %}
+
+<!-- ======= Header ======= -->
+<header id="header" style="height: 65px;">
+    <div class="container d-flex align-items-center justify-content-between" style="height: 40px;">
+
+        <div class="logo">
+            <h1><a href="" class="manage-staff-link"><img src="{% static "assets/img/clients/client-4.png" %}" class="logo-image" alt="User Image">Great Alliance Portal | Student<span>.</span>
+
+                </a>
+
+            </h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!--<a href="index.html"><img src="{% static "assets/img/king.jpg" %}" alt="" class="img-fluid"></a>-->
+        </div>
+
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li>
+                    {% url 'student_homepage' as student_homepage %}
+                    <a class="nav-link scrollto {% if request.path == student_homepage %} active {% endif %}"
+                        href="{% url 'student_homepage' %}" id="student_home">Home</a>
+                </li>
+                <!--{% if class_room.count > 0 %}
+                <li>
+                    
+                    {% for class_single in class_room %}
+                    <a href="/join_class_room/{{ class_single.course.id }}/{{ class_single.student_level_id.id }}"
+                        class="nav-link scrollto {% if request.path == join_class_room %} active {% endif %}">
+                        JOIN LIVE CLASS of {{ class_single.course.course_name }}
+                    </a>
+                    {% endfor %}
+                </li>
+                {% endif %}-->
+                
+                <li>
+                    {% url 'do_logout' as do_logout %}
+                    <a class="nav-link scrollto {% if request.path == do_logout %} active {% endif %}"
+                        href="{% url 'do_logout' %}">
+                        Log Off</a>
+                </li>
+
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+    </div>
+</header><!-- End Header -->

@@ -1,0 +1,54 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %} 
+    <section id="faq" class="faq section-bg" style="background: white;
+    margin-top: 65px;">
+        <div class="container" >
+    
+            <!--<div class="section-title">
+                <h2 data-aos="fade-in">Staffs Leaves</h2>
+                <p data-aos="fade-in"></p>
+            </div>-->
+            {% for leave in leaves %}
+    
+            <div class="row faq-item d-flex align-items-stretch" data-aos="fade-in"
+            style="box-shadow: 4px 4px 16px 4px rgba(128, 128, 128, 0.254);
+            border-radius: 10px;">
+    
+    
+                <div class="col-lg-5">
+                    <i class=""></i>
+    
+                    <h4><b>ID:</b> {{ leave.staff_id.admin.id }}</h4>
+                    <h4><b>Staff Name:</b> {{ leave.staff_id.admin.first_name }} {{ leave.staff_id.admin.last_name }} </h4>
+                    <h4><b>Date for leave:</b> {{ leave.created_at }} </h4>
+    
+                </div>
+                <div class="col-lg-7">
+    
+                    <p><b>Reason For Leave:</b> {{ leave.leave_message }} </p>
+    
+                    <p>
+                        {% if leave.leave_status == 0 %}
+                        <a href="{% url 'staff_approve_leave' leave_id=leave.id%}" class="btn btn-success">Approve</a>
+                        <a class="btn btn-danger" href="{% url 'staff_disapprove_leave' leave_id=leave.id%}">Disapprove</a>
+    
+                        {% elif leave.leave_status == 1 %}
+                        <button class="btn btn-warning" disabled="disabled" data-toggle="modal"
+                            data-target="#reply_modal">Approved</button>
+                        {% else %}
+                        <button class="btn btn-danger" disabled="disabled" data-toggle="modal"
+                            data-target="#reply_modal">Disapproved</button>
+                        {% endif %}
+                    </p>
+    
+    
+                </div>
+    
+    
+            </div><!-- End F.A.Q Item-->
+    
+            {% endfor %}
+    
+        </div>
+    </section>
+{% endblock main_content %}

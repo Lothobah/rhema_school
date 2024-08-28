@@ -1,0 +1,47 @@
+{% extends 'student_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<section id="faq" class="faq section-bg" style="background: white;
+    margin-top: 65px;">
+    <div class="container">
+
+        <!--<div class="section-title">
+                <h2 data-aos="fade-in">Staffs Leaves</h2>
+                <p data-aos="fade-in"></p>
+            </div>-->
+        {% if course in courses %}
+
+        <div class="row faq-item d-flex align-items-stretch" data-aos="fade-in" style="box-shadow: 4px 4px 16px 4px rgba(128, 128, 128, 0.254);
+            border-radius: 10px;">
+
+
+            <div class="col-lg-5">
+                <i class=""></i>
+
+                <h4><img src="{{ course.staff_id.staffs.staff_profile_pic }}" class="img-responsive"
+                    style="height: 80px; width:80px; margin-top: 2px;margin-left: 4px;"></h4>
+                <h4><b>{{ course.course_code }} | {{ course.course_name }}</h4>
+                <h4>{{ course.course_instructor }} </h4>
+
+            </div>
+            <div class="col-lg-7">
+                <p> 
+                    <a href="{% url 'view_assignments' course.id %}">
+                        <button type="submit" class="btn btn-secondary" style="font-size: larger;padding-left: 20px;margin-left:0px">
+                            Assignments</button></a>
+                    
+                    <a href="{% url 'view_resources' course.id %}">
+                        <button type="submit" class="btn btn-secondary" style="font-size: larger;
+                        margin-left: 0px;">Resources</button></a>
+                    
+                </p>
+
+            </div>
+        </div>
+
+        {% endif %}
+
+    </div>
+</section>
+
+{% endblock main_content %}

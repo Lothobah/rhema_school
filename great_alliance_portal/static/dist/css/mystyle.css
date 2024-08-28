@@ -1,0 +1,7 @@
+.para {
+    color: red;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.para:hover {
+    color: blue;
+}

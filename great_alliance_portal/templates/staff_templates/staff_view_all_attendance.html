@@ -1,0 +1,147 @@
+{% extends 'staff_templates/base_template.html' %}
+
+{% block main_content %}
+<div class="super_container" style="background: white;">
+    <h6 class="add-head" style="margin-left: 30px; margin-top: 15px;"><b>Attendance Reports for {{ student.admin.last_name }} {{ student.admin.first_name }}</b></h6>
+
+    <form method="get" action="{% url 'staff_view_all_attendance' student_id=student.id %}">
+        <div class="row">
+            <div class="centered-select">
+                <label for="academic_year_id">Select Academic Year</label>
+                <div class="select-wrapper">
+                    <select id="academic_year_id" name="academic_year_id" class="form-control" required>
+                        <option value="">-----------</option>
+                        {% for year in academic_years %}
+                        <option value="{{ year.id }}" {% if year.id|stringformat:"s" == selected_academic_year %}selected{% endif %}>
+                            {{ year.academic_year }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="centered-select">
+                <label for="semester_id">Select Term</label>
+                <div class="select-wrapper">
+                    <select id="semester_id" name="semester_id" class="form-control" required>
+                        <option value="">-----------</option>
+                        {% for semester in semesters %}
+                        <option class="voption" value="{{ semester.id }}" {% if semester.id|stringformat:"s" == selected_semester %}selected{% endif %}>
+                            {{ semester.semester }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group centered-select" style="margin-top:12px;">
+                <button style="" type="submit" class="btn btn-secondary">Display Attendance</button>
+            </div>
+        </div>
+    </form>
+
+    {% if messages %}
+    <h6 style="font-size:13px; margin-top:40px;">
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-danger" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+        {% endif %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+    </h6>
+    {% endif %}
+
+    {% if chunked_attendance_reports %}
+    <div class="table-container">
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th colspan="4" style="border-right: none;">Total Term Attendance: {{ total_attendance }}</th>
+                    <th colspan="3" style="border-right: none;">Total Presents: {{ attendance_present }}</th>
+                    <th colspan="3" style="border-right: none;">Total Absents: {{ attendance_absent }}</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for chunk in chunked_attendance_reports %}
+                <tr style="background: #f3f5f8">
+                    {% for attendance_report in chunk %}
+                        <td>{{ attendance_report.attendance_id.attendance_date|date:"D. F j, Y" }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for attendance_report in chunk %}
+                        {% if attendance_report.status == True %}
+                        <td><b>Present</b></td>
+                        {% else %}
+                        <td style="color: red;"><b>Absent</b></td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+<style>
+    .add-head {
+        margin-top: 16px;
+        margin-bottom: 40px;
+        margin-left: 60px;
+    }
+    .form-container {
+        margin-bottom: 30px;
+    }
+    .messages-container {
+        margin-top: 40px;
+        text-align: center;
+    }
+    .table-container {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+    .table {
+        margin-top: 25px;
+        margin-left: 30px;
+    }
+    .centered-select {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-right: 15px;
+    }
+    .select-wrapper select {
+        text-align-last: center; /* Ensures centering */
+    }
+    @media (max-width: 768px) {
+        .select-wrapper select {
+            font-size: 16px; /* Adjust font size for better readability */
+        }
+        .form-group {
+            text-align: center;
+        }
+        .table {
+            left: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 100%;
+        }
+        .table-container {
+            max-width: 100%;
+            width: 100%;
+        }
+        .super_container {
+            width: 100%;
+            margin-right: 0px;
+            right: 0px;
+            max-width: 100%;
+        }
+    }
+</style>
+{% endblock main_content %}
+

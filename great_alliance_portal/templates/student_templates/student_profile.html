@@ -1,0 +1,129 @@
+{% extends 'student_templates/base_template.html' %}
+{% block main_content %}
+{% load static %}
+<main id="main">
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact" style="margin-top: 100px;">
+        <div class="container" data-aos="">
+
+            <div class="section-title">
+                <!--<h2 style="font-size: large;
+                text-transform: capitalize;">Review & Check to make sure Your Profile is up to date.</h2>-->
+
+                <p style="font-size: 20px;"><b>Review & check to make sure your profile is up to date.</b></p>
+                <hr>
+            </div>
+
+            <div class="form-group">
+                {% if messages %}
+                <div class="col-12">
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success" style="margin-top: 10px;
+                        text-align: center;"><input type="checkbox" checked="checked" disabled>{{message}}</div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- ======= About Section ======= -->
+            <section id="about" class="about">
+                <div class="container" data-aos="" style="border: 1px solid gray; border-radius: 10px;">
+                    <form role="form" style="margin-top: 20px; margin-bottom: 15px;"
+                        action="{% url 'edit_student_profile_save' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <img src="{{ student.profile_pic }}" class="img-fluid" alt="student profile pic"
+                                    style="box-shadow: 2px 4px 8px 0px gray;
+                                border-radius: 10px; height: 200px; width: 200px;">
+                            </div>
+                            <div class="col-lg-8 pt-4 pt-lg-0 content">
+                                <!--<h3>Illustrator &amp; UI/UX Designer</h3>
+                                <p class="fst-italic">
+                                   koo
+                                </p>-->
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <ul style="list-style: none; margin-bottom: 25px;">
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Username:</strong>
+                                                <input type="text" class="form-control" name="username"
+                                                    value="{{ user.username }}" disabled="disabled">
+                                            </li><br>
+
+                                            <li><i class="bi bi-rounded-right"></i> <strong>First Name:</strong>
+                                                <input type="text" class="form-control" name="first_name"
+                                                    value="{{ user.first_name }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Other Name(s):</strong>
+                                                <input type="text" class="form-control" name="last_name"
+                                                    value="{{ user.last_name }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Personal Email:</strong>
+                                                <input type="text" class="form-control" name="email"
+                                                    value="{{ user.email }}">
+                                            </li><br>
+                                            <!--<li><i class="bi bi-rounded-right"></i> <strong>Personal Email:</strong>
+                                                <input type="text" class="form-control" name="email2" value="{{ staff.email2 }}">
+                                            </li><br>-->
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Date of Birth:</strong>
+                                                <input type="text" class="form-control" name="age"
+                                                    value="{{ student.date_of_birth }}" disabled="disabled">
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <ul style="list-style: none; margin-bottom: 25px;">
+
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Gender:</strong>
+                                                <input type="text" class="form-control" name="gender"
+                                                    value="{{ student.gender }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Phone Number:</strong>
+                                                <input type="tel" class="form-control" name="parent_phone"
+                                                    value="{{ student.parent_phone }}" pattern="[0-9]+" maxlength="10">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Home Town</strong>
+                                                <input type="text" class="form-control" name="address1"
+                                                    value="{{ student.home_town }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Programme
+                                                    </strong>
+                                                <input type="text" class="form-control" name="address2"
+                                                    value="{{ student.programme_id.programme_name }}" disabled="disabled">
+                                            </li><br>
+                                            <li><i class="bi bi-rounded-right"></i> <strong>Year
+                                            </strong>
+                                            <input type="text" class="form-control" name="" value="{{ student.student_level_id.level_name }}"
+                                                disabled="disabled">
+                                            </li><br>
+                                            
+                                        </ul>
+                                    </div>
+
+                                    <button type="submit" style="text-align: center;
+                                        max-width: 300px; margin-left: auto; margin-right: auto;
+                                        margin-top: 25px; margin-bottom: 25px;"
+                                        class="btn btn-secondary btn-block">Update Profile</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </section><!-- End About Section -->
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+
+<!-- Main content -->
+{% endblock main_content %}

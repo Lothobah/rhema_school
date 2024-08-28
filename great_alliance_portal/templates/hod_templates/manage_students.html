@@ -1,0 +1,94 @@
+{% extends 'hod_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<main id="main">
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg" style="background: white;
+    margin-top:90px">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'add_student' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'add_student' %}" class="manage-staff-link">
+                                    <div class="image-circle">
+                                        <img src="https://img.icons8.com/ios-glyphs/90/000000/student-registration.png"
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Add A Student</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'view_students' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'view_students' %}" class="manage-staff-link">
+                                    <div class="image-circle">
+                                        <img src="https://img.icons8.com/ios-filled/100/000000/students.png"
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">All Students</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'admin_view_student_results' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'admin_view_student_results' %}" class="manage-staff-link">
+                                    <div class="image-circle">
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAACpUlEQVR4nO2dvW4TQRRGDwhMFURLbHeEhyOB94qilIQC2vxJIeJBcGE7vSlWkexhkb2z8/Pt8h1pii1y586c3N2d62LBGGOMGQcz4AJYAZvMYwVcAidFVjZAZsCC/CLCsQCmBdY3OC4oL+N5nBdY30G8qJ3AFivgqNLcS+BdpbmT8Qb4DNwBT6T/r81N6nyfgFvgDJgUyH+HKfArMvGxCtkej8BxgTUATWXkljF0IRvgJ4Uq5UuBxYxByAY4LbAO7oNJv9K8svaltpC+zICrIOZtgrh7WQeTppABwxcCMA9irroGiHntDZNP9eqcK27p+XrFfZkoCZOIVxlilrjd5CA276SV7AoRw0LEsBAxcjxDQg69xy6Bt1vXJZ9FXZqLWfNSqpAfFef+XnHu3uw7UMUeuD4Cv1v+PvdYAB865Jlr/dHkTGhK82PRsiVO6rGk+VGsi4xD1tdLSI6TeukTd2myrl/pGWKwEDksRAwLEcNCxLAQMSxEDAsRw0LEKNHt/Re5+jyHnoz3zV+lw+AKEcNCxLAQMWo+Q2p3gWvP34orRAwLEcNCxLAQMSxEDAsRw0LEcC+rf5ykuELEsBAxLEQM97LEcIWIYSFiWIgYFiKGhYhhIWJYiBjuZfWPkxRXiBgWIoaFiOFelhiuEDEsRAwLEcNCxLAQMSxEDAsRw72s/nGS4goRw0LEsBAx3MsSwxUihoWIYSFiWIgYFiKGhYhhIWJYiBgWIkaJk/pQv0lVBVeIGBYihoWIkeMZItlFHQquEDFihKyD61QfJx4D8+A63Kss3LH7jaWrlkT+R+bAN3b35qbExGe0f2TL4+/xKXKPOzEBHissbmjjAXgducedOcZS9sl4H727kUyAU5r75Doy8TGNNXBNc5sqVhnGGGPMM38AV8LZHBdAhvUAAAAASUVORK5CYII="
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Results</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'admin_view_attendance' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'admin_view_attendance' %}" class="manage-staff-link">
+                                    <div class="image-circle">
+                                        <img src="https://img.icons8.com/ios/100/000000/attendance-mark.png"
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Attendance</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="" class="manage-staff-link">
+                                    <div class="image-circle">
+                                        <img src="https://img.icons8.com/ios/100/000000/attendance-mark.png" class="add-staff-image"
+                                            alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Alumni</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+              
+                
+            </div>
+
+        </div>
+    </section><!-- End Services Section -->
+</main><!-- End #main -->
+
+{% endblock main_content %}

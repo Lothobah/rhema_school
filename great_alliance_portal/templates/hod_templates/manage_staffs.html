@@ -1,0 +1,80 @@
+{% extends 'hod_templates/base_template.html' %}
+{% load static %}
+{% block main_content %} 
+
+<main id="main">
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services section-bg" style="margin-top: 70px;
+    background: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'add_staff' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'add_staff' %}" class="manage-staff-link">
+                                    <div class="image-circle"><img src="https://img.icons8.com/ios-glyphs/90/000000/student-registration.png"
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Add A Staff</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'add_bursar' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'add_bursar' %}" class="manage-staff-link">
+                                    <div class="image-circle"><img src="https://img.icons8.com/ios-glyphs/90/000000/student-registration.png"
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Add Bursar</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'view_staffs' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'view_staffs' %}" class="manage-staff-link">
+                                    <div class="image-circle"><img src="https://img.icons8.com/ios-filled/100/000000/students.png"
+                                            class="add-staff-image" alt="User Image">
+                                    </div>
+                                    <p class="manage-link">All Staffs</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 d-flex" data-aos="">
+                    <a href="{% url 'staff_permissions' %}">
+                        <div class="card">
+                            <div class="main-image-div">
+                                <a href="{% url 'staff_permissions' %}" class="manage-staff-link">
+                                    <div class="image-circle"><img src="{% static "assets/img/apple-touch-icon.png" %}" class="add-staff-image"
+                                            alt="User Image">
+                                    </div>
+                                    <p class="manage-link">Staff Leaves</p>
+                                </a>
+                            </div>
+                        </div>
+                    </a>
+                </div>   
+
+            </div>
+
+        </div>
+    </section><!-- End Services Section -->
+</main><!-- End #main -->
+
+{% endblock main_content %} 
+{% block custom_js %}
+
+{% endblock custom_js %}

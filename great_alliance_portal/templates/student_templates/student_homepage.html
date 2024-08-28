@@ -1,0 +1,105 @@
+{% extends 'student_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+    <main id="main">
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services section-bg" style="margin-top: 70px; background: white;">
+            <div class="container">
+              <h5>
+                {% if messages %}
+                <!--<div class="col-12">-->
+                {% for message in messages %}
+              
+                {% if message.tags == 'error' %}
+                <h5 style="color: red">{{message}}</h5>
+                {% endif %}
+                {% if message.tags == 'success' %}
+                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                {% endif %}
+                {% endfor %}
+                <!--</div>-->
+                {% endif %}
+              </h5><br>
+                <div class="section-title">
+                    <h2 data-aos="fade-in" style="font-size: large;">Welcome {{ user.first_name }} {{ user.last_name }}</h2>
+
+                </div>
+                <div class="row">
+                    <h1>Total:{{ attendance_total }} |Present: {{ attendance_present }} |Absent: {{ attendance_absent }} </h1>
+                    <div class="col-md-6 d-flex" data-aos="">
+                        <!--<a href="{% url 'staff_add_result' %}">-->
+                            <div class="card">
+                                <div class="main-image-div">
+                                    <!--<a href="{% url 'student_profile' %}" class="manage-staff-link">-->
+                                        <div class="image-circle">
+                                            <img src="{% static "assets/img/add_results.png" %}"
+                                                class="add-staff-image" alt="User Image">
+                                        </div>
+                                        <a href="{% url 'student_profile' %}" class="manage-staff-link">
+                                          <p class="manage-link">Profile</p>
+                                        </a>
+                                </div>
+                            </div>
+                        <!--</a>-->
+                    </div>
+                    <div class="col-md-6 d-flex" data-aos="">
+                        
+                            <div class="card">
+                                <div class="main-image-div">
+                                    
+                                        <div class="image-circle">
+                                            <img src="{% static "assets/img/edit_results.webp" %}"
+                                                class="add-staff-image" alt="User Image">
+                                        </div>
+                                        <a href="{% url 'courses' %}" class="manage-staff-link">
+                                          <p class="manage-link">Courses</p>
+                                        </a>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="col-md-6 d-flex" data-aos="">
+                        
+                            <div class="card">
+                                <div class="main-image-div">
+                                    
+                                        <div class="image-circle">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAACpUlEQVR4nO2dvW4TQRRGDwhMFURLbHeEhyOB94qilIQC2vxJIeJBcGE7vSlWkexhkb2z8/Pt8h1pii1y586c3N2d62LBGGOMGQcz4AJYAZvMYwVcAidFVjZAZsCC/CLCsQCmBdY3OC4oL+N5nBdY30G8qJ3AFivgqNLcS+BdpbmT8Qb4DNwBT6T/r81N6nyfgFvgDJgUyH+HKfArMvGxCtkej8BxgTUATWXkljF0IRvgJ4Uq5UuBxYxByAY4LbAO7oNJv9K8svaltpC+zICrIOZtgrh7WQeTppABwxcCMA9irroGiHntDZNP9eqcK27p+XrFfZkoCZOIVxlilrjd5CA276SV7AoRw0LEsBAxcjxDQg69xy6Bt1vXJZ9FXZqLWfNSqpAfFef+XnHu3uw7UMUeuD4Cv1v+PvdYAB865Jlr/dHkTGhK82PRsiVO6rGk+VGsi4xD1tdLSI6TeukTd2myrl/pGWKwEDksRAwLEcNCxLAQMSxEDAsRw0LEKNHt/Re5+jyHnoz3zV+lw+AKEcNCxLAQMWo+Q2p3gWvP34orRAwLEcNCxLAQMSxEDAsRw0LEcC+rf5ykuELEsBAxLEQM97LEcIWIYSFiWIgYFiKGhYhhIWJYiBjuZfWPkxRXiBgWIoaFiOFelhiuEDEsRAwLEcNCxLAQMSxEDAsRw72s/nGS4goRw0LEsBAx3MsSwxUihoWIYSFiWIgYFiKGhYhhIWJYiBgWIkaJk/pQv0lVBVeIGBYihoWIkeMZItlFHQquEDFihKyD61QfJx4D8+A63Kss3LH7jaWrlkT+R+bAN3b35qbExGe0f2TL4+/xKXKPOzEBHissbmjjAXgducedOcZS9sl4H727kUyAU5r75Doy8TGNNXBNc5sqVhnGGGPMM38AV8LZHBdAhvUAAAAASUVORK5CYII="
+                                                class="add-staff-image" alt="User Image">
+                                        </div>
+                                        <a href="{% url 'student_view_results' %}" class="manage-staff-link">
+                                          <p class="manage-link">View Results</p>
+                                        </a>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 d-flex" data-aos="">
+                        <a href="{% url 'student_view_attendance' %}">
+                            <div class="card">
+                                <div class="main-image-div">
+                                    <a href="{% url 'student_view_attendance' %}" class="manage-staff-link">
+                                        <div class="image-circle">
+                                            <img src="{% static "assets/img/attendance.webp" %}"
+                                                class="add-staff-image" alt="User Image">
+                                        </div>
+                                        <p class="manage-link">View Attendance</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+    </main><!-- End #main -->
+
+
+
+    
+    {% endblock main_content %}
+    {% block custom_js %}
+    {% endblock custom_js %}

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Great Alliance student portal.</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{% static "kingloth/mycss/mystyle.css" %}" rel="stylesheet">
+    <link href="{% static "assets/img/clients/client-4.png" %}" rel="icon">
+    <link rel="stylesheet" href="{% static "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" %}">
+    <link href="{% static "assets/img/apple-touch-icon.png" %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static "js/jquery-1.11.1.js" %}"></script>
+    <script src="{% static "js/rango.js" %}"></script>
+    <link href="{% static "assets/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static "assets/css/style.css" %}" rel="stylesheet">
+
+    <!-- =======================================================
+  * Template Name: Bocor - v4.7.1
+  * Template URL: https://bootstrapmade.com/bocor-bootstrap-template-nice-animation/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+    <!-- ======= Header ======= -->
+    {% include 'student_templates/header.html' %}
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    {% block main_content %}{% endblock main_content %}
+    <!-- End Hero -->
+
+    <!-- ======= Footer ======= -->
+    {% include 'student_templates/footer.html' %}
+    <!-- End  Footer -->
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Vendor JS Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static "assets/vendor/aos/aos.js" %}"></script>
+    <script src="{% static "assets/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "assets/vendor/glightbox/js/glightbox.min.js" %}"></script>
+    <script src="{% static "assets/vendor/isotope-layout/isotope.pkgd.min.js" %}"></script>
+    <script src="{% static "assets/vendor/swiper/swiper-bundle.min.js" %}"></script>
+    <script src="{% static "assets/vendor/php-email-form/validate.js" %}"></script>
+
+    <!-- Template Main JS File -->
+    <script src="{% static "assets/js/main.js" %}"></script>
+    {% block custom_js %}
+    {% endblock custom_js %}
+</body>
+
+</html>

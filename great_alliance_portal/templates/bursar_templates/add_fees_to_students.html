@@ -1,0 +1,161 @@
+{% extends "bursar_templates/base_template.html" %}
+{% block main_content %}
+<div class="super_container">
+
+    <!-- Flex container to hold both elements -->
+    <div class="d-flex justify-content-between align-items-start" style="margin-top: 2px;">
+
+        <div class="text-center w-100">
+            <div class="card">
+                <h5 class="form-header">Fee Entry and Updates.</h5>
+                <form method="POST" class="mx-3 mx-md-5" style="">
+                    <h6 style="font-size:13px;">
+                        <div id="message-container"></div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="text-align: center; width: 70%; max-width: 200px; margin: 0 auto;">{{ message }}</div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="text-align: center; width: 70%; max-width: 200px; margin: 0 auto;">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </h6>
+                    {% csrf_token %}
+                    <input type="hidden" name="student_level" value="{{ selected_level_id }}">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <label for="student_level" style="font-size: 0.9em;">Select Class:</label>
+                            <select name="student_level" id="student_level" class="form-control form-control-sm" style="font-size: 0.7em; height: 30px; padding: 5px; width: 80%; text-align: center; text-align-last: center;" required>
+                                <option value="">------------</option>
+                                {% for level in student_levels %}
+                                <option value="{{ level.id }}">{{ level.level_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="school_fees" style="font-size: 0.9em;">School Fees:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="school_fees" id="school_fees" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                            <label for="extra_classes" style="font-size: 0.9em;">Extra Classes:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="extra_classes" id="extra_classes" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                            <label for="stationary" style="font-size: 0.9em;">Stationary:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="stationary" id="stationary" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                            <label for="sport_culture" style="font-size: 0.9em;">Sport & Culture:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="sport_culture" id="sport_culture" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="ict" style="font-size: 0.9em;">ICT:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="ict" id="ict" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                            <label for="pta" style="font-size: 0.9em;">PTA:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="pta" id="pta" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                            <label for="maintenance" style="font-size: 0.9em;">Maintenance:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="maintenance" id="maintenance" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                            <label for="light_bill" style="font-size: 0.9em;">Light Bill:</label>
+                            <input class="form-control form-control-sm" type="number" step="0.01" name="light_bill" id="light_bill" required style="font-size:0.7em; height: 30px; padding: 5px; width: 80%;">
+                        </div>
+                    </div>
+                    <div class="text-center" style="margin-top: 10px;">
+                        <button type="submit" class="btn btn-success" style="font-size: 0.9em; width: 120px;">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 15px;">
+                <a href="{% url 'bursar_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .form-header {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 7px;
+    }
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 2px;
+}
+    @media (max-width: 600px) {
+	.add-head {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+    .card {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin: 20px auto;
+        padding: 15px;
+        max-width: 650px;
+        margin-top: 85px;
+    }
+    @media (max-width: 600px) {
+        .card {
+            margin-left: 20px;
+            width: 100%;
+            max-width: 100%;
+            margin-top: 30px;
+        }
+    }
+</style>
+{% endblock main_content %}
+
+{% block custom_js %}
+
+<script>
+    document.getElementById('student_level').addEventListener('change', function () {
+        const levelId = this.value;
+
+        if (levelId) {
+            fetch(`/check_fees_for_level?student_level_id=${levelId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const messageContainer = document.getElementById('message-container');
+
+                    if (data.exists) {
+                        // Set the values of the fees
+                        document.getElementById('school_fees').value = data.school_fees;
+                        document.getElementById('extra_classes').value = data.extra_classes;
+                        document.getElementById('stationary').value = data.stationary;
+                        document.getElementById('sport_culture').value = data.sport_culture;
+                        document.getElementById('ict').value = data.ict;
+                        document.getElementById('pta').value = data.pta;
+                        document.getElementById('maintenance').value = data.maintenance;
+                        document.getElementById('light_bill').value = data.light_bill;
+
+                        // Display a message indicating that the fees already exist and can be updated
+                        if (messageContainer) {
+                            messageContainer.innerHTML = `<div class="alert alert-info">
+                                Fees for <strong>${data.level_name}</strong> already exist.
+                                You can make any necessary changes to the fees and submit the form to update the fees for this class.
+                            </div>`;
+                        }
+                    } else {
+                        // Clear the fees input fields and message if no fees exist
+                        document.querySelectorAll('input[type="number"]').forEach(input => {
+                            input.value = '';  // Clear existing values
+                        });
+
+                        if (messageContainer) {
+                            messageContainer.innerHTML = '';
+                        }
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    });
+</script>
+
+{% endblock custom_js %}
+
+

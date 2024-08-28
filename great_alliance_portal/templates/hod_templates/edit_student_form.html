@@ -1,0 +1,113 @@
+<div class="row mt-5" id="stu-row">
+    <div class="col-lg-8 mt-5 mt-lg-0">
+        <h5 id="mess">
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                        <div class="alert alert-error" style="text-align: center;">{{ message }}</div>
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </h5>
+        <h6 id="add-head"><b>Update Profile of {{ student.admin.last_name|upper }} {{ student.admin.first_name }}</b></h6>
+
+        <form action="{{ action_path }}" method="post" role="form" class="stu-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                {% for field in form %}
+                    <div class="col-md-6 form-group mt-3 mt-md-0">
+                        <label for="" style="color: black;"><b>{{ field.label_tag }}</b></label>
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group mt-3 d-flex align-items-center justify-content-start">
+                <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                <button type="submit" id="sub-button" class="form-control btn btn-primary">{{ button_text }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 50px;
+        margin-left: 230px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+
+    #mess {
+        margin-left: 120px;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    #stu-row {
+        margin-left: 40px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        background: #f3f5f8;
+    }
+
+    .stu-form {
+        margin-left: 140px;
+        margin-top: 50px;
+    }
+
+    #sub-button {
+        border-radius: 4px;
+        width: 180px;
+        margin-left: 15px; /* Adjusting the space between the link and button */
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: 10px;
+        border: 1px solid red;
+    }
+
+    @media (max-width: 600px) {
+        #add-head {
+            margin-left: 40px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        #mess {
+            margin-left: 2px;
+        }
+
+        #stu-row {
+            margin-left: 0px;
+            left: 0px;
+        }
+
+        #sub-button {
+            margin-left: 5px;
+            width: 160px;
+        }
+
+        .stu-form {
+            margin-left: 0px;
+        }
+    }
+</style>

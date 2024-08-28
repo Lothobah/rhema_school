@@ -1,0 +1,47 @@
+{% extends 'student_templates/base_template.html' %}
+{% block main_content %}
+<!-- Main content -->
+<section class="content" style="margin-top: 70px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title" style="color: black; text-align: center;"></h5>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <p>{{ course_list }}</p>
+                        <table class="table table-hover text-nowrap">
+                            
+                            <tbody>
+                                <tr>
+                                    <td style="color:green"><b>Courses:</b></td>
+                                    {% for course_name in course_name %}
+                                    <td>{{ course_name }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="color:green"><b>Attendance Presents:</b></td>
+                                    {% for data_present in data_present %}
+                                    <td style="color:blue">{{ data_present }}</td>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    <td style="color:green"><b>Attendance Absents:</b></td>
+                                    {% for data_absent in data_absent %}
+                                    <td style="color:red">{{ data_absent }}</td>
+                                    {% endfor %}
+                                </tr>
+                           </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock main_content %}

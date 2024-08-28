@@ -1,0 +1,140 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+<!-- Main content -->
+<section class="content" style="margin-top: 10px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header" style="background: #f3f5f8;">
+                        <h5 class="card-title" style="background: #f3f5f8; color: black; text-align: center;">Manage Staff Members: View and Remove Departing Staff</h5>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table">
+                            <thead>
+                                <tr
+                                    style="font-size: 14px; background: #f3f5f8;">
+                                    <!--<th>ID</th>
+
+                                    <th>USERNAME</th>-->
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th style="text-align: center;">Email</th>
+                                    <th>Profile Pic</th>
+                                    <th>Gender</th>
+                                    <th>Date of Birth</th>
+                                    <th>Postal</br>Address</th>
+                                    <th>Residential</br>Address</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 15px;">
+                                <tr>
+                                    <th>Bursar</th>
+                                </tr>
+                                {% for bursar in bursar %}
+                                <tr style="background: #f3f5f8">
+                                    <!--<td>{{ bursar.admin.id }}</td>
+                                    <td>{{ bursar.admin.username }}</td>-->
+                                    <td>{{ bursar.admin.last_name|upper }} {{ bursar.admin.first_name }}</td>
+                                    <td>{{ bursar.phone_number }}</td>
+                                    <td>{{ bursar.admin.email }}</td>
+
+                                    <td><img src="{{ bursar.staff_profile_pic }}" alt="bursar profile pic"
+                                        style="height: 60px; width: 70px; border-radius: 7px;"></td>
+
+                                    <td>{{ bursar.gender }}</td>
+                                    <td>{{ bursar.date_of_birth }}</td>
+                                    <td>{{ bursar.address1 }}</td>
+                                    <td>{{ bursar.address2 }}</td>
+
+                                    <!--<td><a href="/edit_staff/{{staff.admin.id}}" class="btn btn-success">Edit</a></td>-->
+                                    <td>
+                                        <form method="POST" action="{% url 'delete_bursar' bursar.admin.id %}"
+                                        onclick="return confirm('Are you certain you want to remove {{ bursar.title }} {{ bursar.admin.first_name }} {{ bursar.admin.last_name }} from the school system? Please note that {{ bursar.title }} {{ bursar.admin.first_name }} is the school bursar. This action cannot be undone.')">
+                                        {% csrf_token %}
+                                        <button type="submit" name="delete" class="btn btn-danger" style="border: none; background: none;">
+                                            <i class="fas fa-trash-alt" style="font-size: 20px; color: red;"></i>
+                                        </button>
+
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% for staff in staffs %}
+                                <tr>
+                                    <!--<td>{{ staff.admin.id }}</td>
+                                    <td>{{ staff.admin.username }}</td>-->
+                                    <td>{{ staff.admin.last_name|upper }} {{ staff.admin.first_name }}</td>
+                                    <td>{{ staff.phone_number }}</td>
+                                    <td>{{ staff.admin.email}}</td>
+
+                                    <td><img src="{{ staff.staff_profile_pic }}" alt="staff profile pic"
+                                        style="height: 60px; width: 70px; border-radius: 7px;"></td>
+
+                                    <td>{{ staff.gender }}</td>
+                                    <td>{{ staff.date_of_birth }}</td>
+                                    <td>{{ staff.address1 }}</td>
+                                    <td>{{ staff.address2 }}</td>
+
+                                    <!--<td><a href="/edit_staff/{{staff.admin.id}}" class="btn btn-success">Edit</a></td>-->
+                                    <td>
+                                        <form method="POST" action="{% url 'delete_staff' staff.admin.id %}"
+                                        onclick="return confirm('Are you certain you want to remove {{ staff.title }} {{ staff.admin.first_name }} {{ staff.admin.last_name }} from the school system? This action cannot be undone.')">
+                                        {% csrf_token %}
+                                        <button type="submit" name="delete" class="btn btn-danger" style="border: none; background: none;">
+                                            <i class="fas fa-trash-alt" style="font-size: 20px; color: red;"></i>
+                                        </button>
+
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 70px;">
+                    <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+<style>
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 20px;
+
+    }
+    .row {
+        margin-left: 61px;
+        margin-right: 50px;
+        width: 94%;
+    }
+    .card-body {
+        width: 100%;
+    }
+    @media (max-width: 600px) {
+        .row {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+
+        }
+        .card-body {
+            width: 100%;
+        }
+        .table {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock main_content %}

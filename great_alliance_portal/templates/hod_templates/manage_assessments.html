@@ -1,0 +1,19 @@
+<!-- This template already filters assessments by school -->
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+<h2 style="margin-top:100px;">Manage Assessments</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Assessment</button>
+</form>
+
+<h3>Existing Assessments</h3>
+<ul>
+    {% for assessment in assessments %}
+        <li>{{ assessment.name }} - Max Mark: {{ assessment.max_score }}</li>
+    {% empty %}
+        <li>No assessments available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

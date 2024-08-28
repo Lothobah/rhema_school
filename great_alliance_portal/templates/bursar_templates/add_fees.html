@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Fees</title>
+</head>
+<body>
+    <h2>Add Fees</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Fees</button>
+    </form>
+</body>
+</html>

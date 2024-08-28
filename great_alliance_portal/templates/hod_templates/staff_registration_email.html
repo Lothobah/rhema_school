@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Include some basic styling for emails */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .content {
+            text-align: left;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="{{ logo_url }}" alt="Great Alliance Logo" width="150">
+        </div>
+        <div class="content">
+            <h2>Welcome to Great Alliance, {{ user.first_name }} {{ user.last_name }}</h2>
+            <p>Dear {{ user.staffs.title }} {{ user.last_name }},</p>
+
+            <p>We are pleased to inform you that you have been successfully registered as a staff member at Great Alliance Preparatory/JHS. Below are your login credentials, which you can use to access the Great Alliance Portal:</p>
+
+            <ul>
+                <li><strong>Username:</strong> {{ username }}</li>
+                <li><strong>Password:</strong> {{ password }}</li>
+            </ul>
+
+            <p>Please keep this information secure and do not share it with others. You can log in to the portal by visiting:</p>
+
+            <a href="https://kingloth.pythonanywhere.com" class="btn">Login to the Portal</a>
+
+            <p>For your security, we recommend that you change your password after your first login.</p>
+
+            <p>If you have any questions or need assistance, please do not hesitate to contact our support team at 0247268375.</p>
+
+            <p>Thank you for joining the Great Alliance community. We look forward to your valuable contributions.</p>
+
+            <p>Best regards,</p>
+            <p>{{ head.first_name }} {{ head.last_name }}<br>
+            Headmaster, Great Alliance Preparatory/JHS</p>
+        </div>
+        <div class="footer">
+            <p>&copy; {{ year }} Great Alliance Preparatory/JHS. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

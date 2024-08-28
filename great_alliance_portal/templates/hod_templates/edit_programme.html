@@ -1,0 +1,83 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+<main id="main">
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container" data-aos="fade-up">
+
+            <div class="section-title">
+
+                <p>Selecting a staff and clicking on 
+                     submit will update the class Tuitor for {{ clas.class_name }}</p>
+            </div>
+
+
+            <div class="row mt-5">
+
+                <div class="col-lg-8 mt-5 mt-lg-0">
+
+                    <form action="/edit_class_save" method="post" role="form" class="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label style="color:black">Class</label>
+                                <input type="text" name="class_name" class="form-control" placeholder="Class Name"
+                                    value="{{ clas.class_name }}" disabled="disabled">
+                                <input type="hidden" class="form-control" name="class_id" value="{{clas.id}}">
+                            </div>
+                            <div class="col-md-6 form-group mt-3 mt-md-0">
+                                <label style="color: black;">Select A Staff</label>
+                                <select class="form-control" name="staff">
+                                    {% for staff in staffs %}
+                                    <option value="{{ staff.id}}" {% if staff.id == clas.staff_id.id %} selected {% endif %}>{{staff.first_name}}
+                                        {{staff.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!--<div class="col-md-6 form-group">
+                            <label style="color: black;">Select A Staff</label>
+                            <select class="form-control" name="staff">
+                                {% for staff in staffs %}
+                                <option value="{{ staff.id}}" {% if staff.id == classes.staff_id.id %} selected {% endif %}>
+                                    {{staff.first_name}}
+                                    {{staff.last_name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>-->
+
+                        <div class="my-3">
+                            <!--<div class="loading">Loading</div>-->
+                            {% if messages %}
+                            <!--<div class="col-12">-->
+                            {% for message in messages %}
+
+                            {% if message.tags == 'error' %}
+                            <div class="error-message" style="color: red;">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                            <div class="sent-message" style="color: green;">{{ message }}</div>
+                            {% endif %}
+                            {% endfor %}
+                            <!--</div>-->
+                            {% endif %}
+
+
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0 text-center">
+                            <button type="submit" style="border-radius: 10px;"
+                                class="col-md-6 form-control btn btn-success">Submit</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- End Contact Section -->
+
+</main><!-- End #main -->
+
+{% endblock main_content %}

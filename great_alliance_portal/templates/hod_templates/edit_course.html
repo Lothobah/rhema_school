@@ -1,0 +1,146 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+                    <form action="{% url 'edit_course_save' %}" method="post" role="form" id="add-form">
+                        {% csrf_token %}
+                        <h6 id="add-head"><b>Modify Details for {{ course.course_name }}</b></h6>
+                            <div class="centered-select" style="margin-top: 20px;">
+                                <h6 style="font-size:12px;">
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                      {% if message.tags == 'error' %}
+                                        <div class="alert alert-danger" style="margin-top: 10px;">{{message}}</div>
+                                      {% endif %}
+                                      {% if message.tags == 'success' %}
+                                        <div class="alert alert-success" style="width: 200px; margin-top: 10px; text-align: center;">{{message}}</div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </h6>
+                            <label for="">Subject Name:</label>
+                            <div class="select-wrapper" id="sub-sel">
+
+                                <input type="text" name="course_name" style="text-align: center;" class="form-control" placeholder="Subject"
+                                value="{{ course.course_name }}">
+                                <input type="hidden" class="form-control" name="course_id" value="{{course.id}}">
+                            </div>
+                            </div>
+
+                            <div class="centered-select" style="margin-top: 15px; margin-bottom: 30px;">
+                            <label style="color: black;">Select Subject Teacher:</label>
+                            <div class="select-wrapper" style="text-align: center;" id="sel-wrap">
+                              <select id="sel" class="form-control" name="staff" style="text-align: center;">
+                                {% for staff in staffs %}
+                                <option value="{{ staff.id}}" {% if staff.id == course.staff_id.id %} selected {% endif %} style="text-align: center;">{{staff.last_name|upper}}
+                                  {{staff.first_name}}</option>
+                                {% endfor %}
+                              </select>
+                            </div>
+                            </div>
+
+                        <!--</fieldset>-->
+                        <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 70px;">
+                            <a href="{% url 'manage_course' %}" class="btn btn-light" id="return-button">&larr; Back</a>
+                            <button type="submit" id="add-button" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+
+<style>
+    #add-head {
+    color: black;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
+
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+
+    #add-form {
+        background: #f3f5f8;
+        width: 550px;
+        margin: 60px auto 30px auto;
+    }
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 25px;
+    }
+    #sub-button {
+        border-radius: 4px;
+        width: 110px;
+        margin-left: 20px; /* Adjusting the space between the link and button */
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: 4px;
+        border: 1px solid red;
+        margin-left: 165px;
+    }
+       @media (max-width: 600px) {
+        #sub-sel {
+
+            margin-right: 100px;
+        }
+        .form-control {
+            width: 240px;
+        }
+        #return-button {
+        margin-left: 75px;
+    }
+        #sub-button {
+            margin-left: 10px;
+            width: 90px;
+        }
+        #sel {
+            text-align-last: center;
+        }
+        #sel-wrap {
+            margin-left: 43px;
+            width: 280px;
+        }
+
+    	.results-container {
+    		margin-left: 0px;
+	}
+
+        #add-form {
+            width: 370px;
+            margin-top: 75px;
+        }
+	.select-wrapper {
+	    width: 160px;
+	    margin-left: 10px;
+	    text-align: center;
+	}
+	#add-button {
+	    width: 120px;
+	    margin-right: 0px;
+	}
+	#sel-wrapper {
+	    width: 240px;
+	    margin-left: 50px;
+	}
+
+}
+
+  </style>
+
+{% endblock main_content %}

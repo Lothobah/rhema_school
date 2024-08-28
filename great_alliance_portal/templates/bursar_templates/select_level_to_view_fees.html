@@ -1,0 +1,35 @@
+{% extends "bursar_templates/base_template.html" %}
+{% block main_content %}
+<div class="super_container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="centered-select" style="margin-top: 80px;">
+            <h5>
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <h6 style="color: red;">{{ message }}</h6>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                            <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </h5>
+            <label for="student_level">Select Class</label>
+            <select class="form-control" name="student_level" id="student_level" required style="text-align: center; text-align-last: center;">
+                {% for level in student_levels %}
+                    <option value="{{ level.id }}" {% if level.id|stringformat:"s" == student_level_id|stringformat:"s" %} selected {% endif %}>
+                        {{ level.level_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <div class="form-group centered-select" style="margin-top:25px">
+            <input type="submit" class="btn btn-secondary" value="Display Fees">
+        </div>
+    </form>
+</div>
+{% endblock main_content %}

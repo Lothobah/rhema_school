@@ -1,0 +1,118 @@
+{% extends 'hod_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<div class="super_container">
+				<h5 class="add-head"><span id="greeting-message"></span> {{ user.username }}</h5>
+				<div class="row" style="margin-left:20px; margin-right:10px;">
+                    <h6 style="font-size:13px;">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="text-align: center; width: 70%; max-width: 200px; margin: 0 auto;">{{ message }}</div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="text-align: center; width: 70%; max-width: 200px; margin: 0 auto;">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </h6>
+					<div class="col-lg-4 hero_box_col">
+                        <a href="{% url 'add_level' %}" class="hero_box_link" style="text-decoration: none;">
+                            <div class="hero_box d-flex flex-row align-items-center justify-content-start">
+                                <i class="fas fa-chalkboard-teacher fa-3x" style="margin-right: 10px;"></i>
+                                <div class="hero_box_content" style="font-size:13px;">
+                                    <h6>Add Class</h6>
+                                    Add Class
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 hero_box_col">
+                        <a href="{% url 'manage_level' %}" class="hero_box_link" style="text-decoration: none;">
+                            <div class="hero_box d-flex flex-row align-items-center justify-content-start">
+                                <i class="fas fa-edit fa-3x" style="margin-right: 10px;"></i>
+                                <div class="hero_box_content" style="font-size:13px;">
+                                    <h6>Update Class</h6>
+                                    Update Class
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 hero_box_col">
+                        <a href="{% url 'add_academic_year' %}" class="hero_box_link" style="text-decoration: none;">
+                            <div class="hero_box d-flex flex-row align-items-center justify-content-start">
+                                <i class="fas fa-calendar-plus fa-3x" style="margin-right: 10px;"></i>
+                                <div class="hero_box_content" style="font-size:13px;">
+                                    <h6>Add Academic Year</h6>
+                                    Add Academic Year
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 hero_box_col">
+                        <a href="{% url 'add_course' %}" class="hero_box_link" style="text-decoration: none;">
+                            <div class="hero_box d-flex flex-row align-items-center justify-content-start">
+                                <i class="fas fa-book fa-3x" style="margin-right: 10px;"></i>
+                                <div class="hero_box_content" style="font-size:13px;">
+                                    <h6>Add Subject</h6>
+                                    Add Subject
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 hero_box_col">
+                        <a href="{% url 'manage_course' %}" class="hero_box_link" style="text-decoration: none;">
+                            <div class="hero_box d-flex flex-row align-items-center justify-content-start">
+                                <i class="fas fa-book-open fa-3x" style="margin-right: 10px;"></i>
+                                <div class="hero_box_content" style="font-size:13px;">
+                                    <h6>All Subjects</h6>
+                                    All Subjects
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-4 hero_box_col">
+                        <a href="{% url 'students_by_level' %}" class="hero_box_link" style="text-decoration: none;">
+                            <div class="hero_box d-flex flex-row align-items-center justify-content-start">
+                                <i class="fas fa-graduation-cap fa-3x" style="margin-right: 10px;"></i>
+                                <div class="hero_box_content" style="font-size:13px;">
+                                    <h6>View Student Results</h6>
+                                    View Student Results
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+
+
+	</div>
+</div>
+<style>
+    .hero_box {
+            background: #f3f5f8;
+        }
+        .hero_box:hover {
+        	color: #1a1a1a;
+        	border: 2px solid gray;
+
+    }
+    .add-head {
+        margin-left: 40px;
+        margin-top: 15px;
+    }
+    .super_container {
+
+    }
+    @media (max-width: 600px){
+        .add-head {
+            margin-left: 10px;
+        }
+    }
+</style>
+
+{% endblock main_content %}

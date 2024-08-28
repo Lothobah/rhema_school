@@ -1,0 +1,81 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+        <div class="section-title">
+
+          <p style="font-size: 15px; color: black; margin-top: 52px;">
+            <b>Review and Update Class Assignments.</b>
+          </p>
+        </div>
+        <div class="card-body table-responsive p-0 mb-3">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr style="background: white; color: black; font-family: Georgia, 'Times New Roman', Times, serif;">
+                        <!--<th>Subject Code</th>-->
+                        <th>Class</th>
+                        <th> Class teacher</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for student_level in student_level %}
+                      <tr>
+                        <td>{{ student_level.level_name }}</td>
+                        <td>{{ student_level.staff_id.last_name|upper }} {{student_level.staff_id.first_name }}</td>
+
+                        <td><a href="/edit_level/{{student_level.id}}" class="btn btn-secondary" style="border: none; background: none;">
+                            <i class="fas fa-edit" style="font-size: 20px; color: black;"></i>
+                        </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 70px;">
+                    <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                  </div>
+                  </div>
+
+<style>
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 20px;
+    }
+    .container-fluid {
+        margin-left: 170px;
+
+    }
+
+    .card-body {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .table {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10px;
+        width: 700px;
+        background: white;
+    }
+    @media (max-width: 600px) {
+        .card-body {
+            width: 100%;
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        .container-fluid {
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        .table {
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+        }
+    }
+</style>
+{% endblock main_content %}

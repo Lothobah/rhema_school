@@ -1,0 +1,98 @@
+{% extends "bursar_templates/base_template.html" %}
+{% load static %}
+{% block main_content %}
+
+<div class="super_container">
+				<h5 class="add-head"><span id="greeting-message"></span> {{ bursar.admin.first_name }}</h5>
+				<div class="row" style="margin-left:20px; margin-right:10px;">
+                    <h6 style="font-size:13px;">
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="text-align: center; width: 70%; max-width: 200px; margin: 0 auto;">{{ message }}</div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="text-align: center; width: 70%; max-width: 200px; margin: 0 auto;">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </h6>
+					<div class="col-lg-4 hero_box_col">
+            <a href="{% url 'add_fees_to_students' %}"class="hero_box_link" style="text-decoration: none;">
+						<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+							<img src="{% static "images/fee.png" %}" class="svg" alt="">
+							<div class="hero_box_content" style="font-size:13px;">
+								<h6>Fee Entry and Update</h6>
+								 Click to add or update fees.
+							</div>
+						</div></a>
+					</div>
+
+					<div class="col-lg-4 hero_box_col">
+						<a href="{% url 'select_level_to_view_fees' %}" class="hero_box_link" style="text-decoration: none;">
+									<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+										<img src="{% static "images/all_fees.png" %}" class="svg" alt="">
+										<div class="hero_box_content" style="font-size:13px;">
+											<h6>Students' Bills and Payments</h6>
+											View students' bills and record their payments.
+										</div>
+									</div>
+									</a>
+								</div>
+
+					<div class="col-lg-4 hero_box_col">
+						<a href="{% url 'daily_payments' %}" class="hero_box_link" style="text-decoration: none;">
+									<div class="hero_box d-flex flex-row align-items-center justify-content-start">
+										<img src="{% static "images/Payment.png" %}" class="svg" alt="">
+										<div class="hero_box_content" style="font-size:13px;">
+											<h6>Payment Records</h6>
+											Click to see all students payments.
+										</div>
+									</div>
+									</a>
+								</div>
+
+	</div>
+</div>
+<style>
+    .hero_box {
+            background: white;
+        }
+        .hero_box:hover {
+        	color: #1a1a1a;
+        	border: 2px solid gray;
+
+    }
+    .add-head {
+        margin-left: 40px;
+        margin-top: 30px;
+    }
+    .super_container {
+        background: #f3f5f8;
+    }
+    @media (max-width: 600px){
+        .add-head {
+            margin-left: 10px;
+        }
+    }
+</style>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const greetingElement = document.getElementById('greeting-message');
+    const currentHour = new Date().getHours();
+    let greeting = '';
+
+    if (currentHour < 12) {
+        greeting = 'Good Morning,';
+    } else if (currentHour < 18) {
+        greeting = 'Good Afternoon,';
+    } else {
+        greeting = 'Good Evening,';
+    }
+
+    greetingElement.textContent = greeting;
+});
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,49 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+<div class="card-body table-responsive p-0" style="margin-top: 120px;">
+    <table class="table table-hover text-nowrap table-striped">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Assignment</th>
+                <th>Examination</th>
+                <th>Total</th>
+                <th>Grade</th>
+                <th>Remark</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for results in results %}
+
+            <tr>
+                <td>{{ results.student_id.admin.id }}</td>
+                <td>{{ results.student_id.admin.first_name }} {{ results.student_id.admin.last_name }}</td>
+                
+                <td>{{ results.subject_id.subject_name }}</td>
+                <td>{{ results.assignment_mark }}</td>
+                <td>{{ results.exam_mark }}</td>
+                <td>{{ results.total_mark }}</td>
+                <td>{{ results.grade }}</td>
+                <td>{{ results.remark }}</td>
+                
+               
+                
+            </tr>
+
+
+            {% endfor %}
+            {{ aggregate_results }}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+{% endblock main_content %}

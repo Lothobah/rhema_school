@@ -1,0 +1,72 @@
+{% extends 'staff_templates/base_template.html' %}
+
+{% block main_content %}
+    <h6 class="add-head"><b>Select a class to view students.</b></h6>
+    <form method="get" action="{% url 'staff_view_students_by_level' %}">
+
+        <div class="centered-select" style="margin-top:15px;">
+            <label for="level_id">Select Class</label>
+            <div class="select-wrapper">
+            <select id="level_id" name="level_id" class="form-control" required>
+                <option value="">------------</option>
+                {% for level in levels %}
+                <option value="{{ level.id }}" {% if level.id|stringformat:"s" == selected_level %}selected{% endif %}>
+                    {{ level.level_name }}
+                </option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="centered-select" style="margin-top:10px; margin-bottom: 30px;">
+        <button style="margin-top:10px;" type="submit" class="btn btn-secondary mt-3">Filter Students</button>
+        </div>
+    </form>
+
+    {% if students %}
+    <div class="row">
+        {% for student in students %}
+        <div class="col-md-6 mb-3">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    <span class="badge bg-secondary">{{ forloop.counter }}.</span>
+                </div>
+                <div class="flex-grow-1 ms-2"><b>
+                    <a href="{% url 'staff_view_students_results' student_id=student.id %}" style="color:light-blue; text-decoration: none;">
+                        {{ student.admin.last_name }} {{ student.admin.first_name }}
+                    </a></b>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p>No students found for the selected level.</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+<style>
+    .add-head {
+        margin-left: 80px;
+        margin-top: 16px;
+}
+    .table {
+        margin-left: 70px;
+        margin-top: 10px;
+    }
+    .row {
+        margin-left: 70px;
+    }
+    @media (max-width: 600px) {
+	.add-head {
+		margin-left: 15px;
+	}
+	.table {
+	    margin-left: 0px;
+	}
+	.row {
+	    margin-left: 0px;
+	}
+}
+</style>
+
+{% endblock main_content %}

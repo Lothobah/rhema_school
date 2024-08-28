@@ -1,0 +1,86 @@
+{% extends 'student_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<br>
+<div class="container-fluid" style="margin-top: 130px;">
+
+
+    <div class="row">
+
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-default">
+
+                <div class="panel-body" style="background-color: #e3f0e8;border: 0px solid #66cdaa;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+                    
+                        
+                        <img src="{{ course.staff_id.staffs.staff_profile_pic }}" class="img-responsive"
+                        style="height: 80px; width:80px;">
+                    
+                    
+                    <h6 align="center" style="font-family: 'Times New Roman', Times, serif;"><small>{{ course.staff_id.first_name }} {{course.staff_id.last_name }}</small></h6>
+                    <h4 align="center" style="font-family: 'Times New Roman', Times, serif;">{{ course.course_code }} | {{ course.course_name }}</h4>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+        <div class="col-sm-6">
+
+
+            <div class="panel-body"
+                style="background-color:whitesmoke;color:black;font-family: 'Abhaya Libre';font-size:16px;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+                <h3 align="center" ;
+                    style="text-align:center;font-family:'Times New Roman', Times, serif;font-size:40px;color: #728892">Submit
+                    Assignment</h3>
+                {% if messages %}
+                <div class="login-error-div">
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="error-in-login">
+                        {{message}}</div>
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success">
+                        <input type="checkbox" checked="checked" disabled> {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                
+                </div>
+                {% endif %}
+                {% if error_message %}
+                <p><strong>{{ error_message }}</strong></p>
+                {% endif %}
+                <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data"
+                style="margin-left: 30px;">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="text-danger small">{{ field.errors }}</span>
+                        </div>
+                        <label class="control-label col-sm-5"
+                        style="color: black;">{{ field.label_tag }}</label>
+                        <div class="col-sm-5" style="color: black;">{{ field }}</div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-10">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form><br><br>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+{% endblock main_content %}

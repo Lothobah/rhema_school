@@ -1,0 +1,12 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+{% load static %}
+<div style="height: 400px;">
+<p style="margin-top: 100px;">Are you sure you want to delete {{ student.admin.first_name }} {{ student.admin.last_name }}</p>
+<form action="{% url 'delete_student' student.id %}" method="POST">
+    {% csrf_token %} 
+    <a href="{% url 'view_students' %}">Cancel</a>
+    <input type="submit" name="Confirm" value="Yes">
+</form>
+</div>
+{% endblock main_content %}

@@ -1,0 +1,106 @@
+{% extends 'hod_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<div class="main-manage-div" data-aos="" style="height:fit-content;">
+    <h5 class="manage-heading-message">Select a class to view results.</h5>
+    <div class="main-image-div">
+        <a href="{% url 'academic_sem_selection' %}" class="manage-staff-link"><img src="{% static "assets/img/IMG_0688.PNG" %}"
+                class="add-staff-image" alt="User Image">
+            <p class="manage-link">Primary One</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0696.JPG" %}"
+                class="add-staff-image" alt="User Image">
+            <p class="manage-link">Primary Two</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0692 (1).PNG"%}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">Primary Three</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG" %}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">Primary Four</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG" %}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">Primary Five</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG" %}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">Primary Six</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG" %}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">JHS ONE</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG" %}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">JHS TWO</p>
+        </a>
+    </div>
+    <div class="main-image-div">
+        <a href="" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG" %}" class="add-staff-image" alt="User Image">
+            <p class="manage-link">JHS THREE</p>
+        </a>
+    </div>
+
+</div>
+
+<!--<section class="content" style="margin-top:20px;" data-aos="zoom-in">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                 general form elements 
+                
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Student Affairs</h3>
+                        </div>
+                         /.card-header 
+                        form start
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="main-image-div">
+                                    <a href="{% url 'add_student' %}" class="manage-staff-link"><img src="{% static "assets/img/IMG_0688.PNG" %}"
+                                            class="add-staff-image" alt="User Image">
+                                        <p>Add Student</p>
+                                    </a>
+                                </div>
+                                <div class="main-image-div">
+                                    <a href="{% url 'view_students' %}" class="manage-staff-link"><img src="{% static "assets/img/IMG_0696.JPG" %}"
+                                            class="add-staff-image" alt="User Image">
+                                        <p>All Students</p>
+                                    </a>
+                                </div>
+                                <div class="main-image-div">
+                                    <a href="{% url 'admin_view_student_results' %}" class="manage-staff-link"><img src="{% static "assets/img/IMG_0692 (1).PNG" %}" class="add-staff-image" alt="User Image">
+                                        <p>Student Results</p>
+                                    </a>
+                                </div>
+                                <div class="main-image-div">
+                                    <a href="{% url 'admin_view_attendance' %}" class="manage-staff-link"><img src="{% static "assets/img/IMG_0690.PNG"%}" class="add-staff-image" alt="User Image">
+                                        <p>Student Attendance</p>
+                                    </a>
+                                </div>
+                            
+                            </div>    
+                        </div>
+                         /.card-body 
+
+                        
+                    </div>
+               
+            </div>
+        </div>
+    </div>
+     /.card 
+</section>-->
+{% endblock main_content %}

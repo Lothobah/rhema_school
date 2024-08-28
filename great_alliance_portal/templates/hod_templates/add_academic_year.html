@@ -1,0 +1,110 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+                    <form action="{% url 'add_academic_year_save' %}" method="post" role="form" id="add-form">
+                        {% csrf_token %}
+
+                            <h6 id="add-head"><b>Introduce a New Academic Year to the System</b></h6>
+
+                            <div class="centered-select" style="margin-top: 40px;">
+                                <h6 style="font-size:12px;">
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                      {% if message.tags == 'error' %}
+                                        <div class="alert alert-info" style="width: 200px; margin-top: 10px; width: 200px;">{{message}}</div>
+                                      {% endif %}
+                                      {% if message.tags == 'success' %}
+                                        <div class="alert alert-success" style="width: 200px; margin-top: 10px; text-align: center;">{{message}}</div>
+                                      {% endif %}
+                                      {% if message.tags == 'info' %}
+                                        <div class="alert alert-info" style="width: 200px; margin-top: 10px; text-align: center;">{{message}}</div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </h6>
+                            <label for="">Add Academic Year:
+                            </label>
+                            <div class="select-wrapper" style="margin-bottom: 30px;">
+                            <input class="form-control" name="academic_year" type="text" required
+                                placeholder="eg.2024-2025" style="text-align: center;">
+                            </div>
+                            </div>
+                        <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 85px;">
+                            <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                            <button type="submit" value="Apply" id="sub-button" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+
+<style>
+    #sub-button {
+        border-radius: 4px;
+        width: 110px;
+        margin-left: 15px; /* Adjusting the space between the link and button */
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: 5px;
+        border: 1px solid red;
+        margin-left: 45px;
+    }
+    #add-form {
+         background: white;
+         width: 550px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-bottom: 50px;
+         margin-top: 100px;
+    }
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 40px;
+        margin-left: 100px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+       @media (max-width: 600px) {
+        #return-button {
+        margin-left: 15px;
+    }
+        #sub-button {
+            margin-left: 5px;
+            width: 90px;
+        }
+        #add-form {
+            width: 370px;
+        }
+    	.results-container {
+    		margin-left: 0px;
+	}
+    	#add-head {
+    	    margin-left: 20px;
+    	    text-align: center;
+	}
+	.select-wrapper {
+	    width: 160px;
+	    margin-left: 10px;
+	}
+	#add-button {
+	    width: 120px;
+	    margin-right: 0px;
+	}
+
+}
+
+  </style>
+{% endblock main_content %}
+

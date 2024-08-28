@@ -1,0 +1,224 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+<div class="super_container">
+
+    <form method="get" action="{% url 'view_student_results' student_id=student.id %}" style="background: white;" id="add-form">
+        {% csrf_token %}
+        <h6 id="add-head">Please select the Academic Year and Term to review the assessment records for <b>{{ student.admin.last_name|upper }}, {{ student.admin.first_name }}</b></h6>
+
+        <div class="row">
+            <div class="centered-select">
+                {% if messages %}
+                <h6 style="font-size:13px; margin-top:40px;">
+                    {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+                    {% endif %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+                    {% endif %}
+                    {% endfor %}
+                </h6>
+                {% endif %}
+                <label for="academic_year_id">Select Academic Year:</label>
+                <div class="select-wrapper">
+                    <select id="academic_year_id" name="academic_year_id" class="form-control" required style="text-align: center;">
+                        <option value="">-------------------</option>
+                        {% for year in academic_years %}
+                        <option value="{{ year.id }}" {% if year.id|stringformat:"s" == selected_academic_year %}selected{% endif %}>
+                            {{ year.academic_year }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="centered-select">
+                <label for="semester_id">Select Term:</label>
+                <div class="select-wrapper">
+                    <select id="semester_id" name="semester_id" class="form-control" required>
+                        <option value="">-------------------</option>
+                        {% for semester in semesters %}
+                        <option class="voption" value="{{ semester.id }}" {% if semester.id|stringformat:"s" == selected_semester %}selected{% endif %}>
+                            {{ semester.semester }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group centered-select" style="margin-top: 35px; margin-bottom: 40px;">
+                <button style="" type="submit" class="btn btn-success">Display Assessment Records</button>
+            </div>
+        </div>
+    </form>
+
+
+    {% if results %}
+    <table class="table table-bordered table-responsive" style="margin-top:30px; background: white;">
+        <thead style="font-size: 14px;">
+
+            <tr>
+                <th colspan="11" style="text-align: center;">{{ level_name }} - {{ semester }} - {{ academic_year }} ACADEMIC YEAR</th>
+
+            </tr>
+            <tr>
+                <th colspan="11" style="text-align:center;">TOTAL SCORE: {{ student_total_mark|floatformat:0 }} - POSITION IN CLASS: {{ overall_position }}</th>
+            </tr>
+            <tr style="background: white-smoke;">
+                <th>SUBJECT</th>
+                <th>INDIVIDUAL TEST</th>
+                <th>GROUP WORK</th>
+                <th>CLASS TEST</th>
+                <th>PROJECT</th>
+                <th>TOTAL 50%</th>
+                <th>EXAM 50%</th>
+                <th>TOTAL 100%</th>
+                <th>POSITION IN SUBJECT</th>
+                <th>GRADE</th>
+                <th>REMARK</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result.course_id.course_name|upper }}</td>
+                <td>{{ result.individual_test_score|floatformat:0 }}</td>
+                <td>{{ result.group_work_score|floatformat:0 }}</td>
+                <td>{{ result.class_test_score|floatformat:0 }}</td>
+                <td>{{ result.project_score|floatformat:0 }}</td>
+                <td>{{ result.assignment_mark|floatformat:0 }}</td>
+                <td>{{ result.exam_mark|floatformat:0 }}</td>
+                <td>{{ result.total_mark|floatformat:0 }}</td>
+                <td>{{ result.course_position }}</td>
+                <td>{{ result.grade }}</td>
+                <td>{{ result.remark }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    {% endif %}
+    <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 20px;">
+        <a href="{% url 'students_by_level' %}" class="btn btn-light" id="return-button">&larr; Back</a>
+    </div>
+</div>
+<style>
+    .super_container {
+        width: 100%;
+        background: #f3f5f8;
+    }
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 5px;
+    }
+    /* Ensure select wrapper adapts to the screen size */
+    .select-wrapper {
+        width: 70%;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Style the select element */
+    select.form-control {
+        width: 40%;
+        padding: 10px; /* Adjust the padding for better spacing */
+        text-align: center; /* Center the text in the select box */
+        text-align-last: center; /* Ensure selected text is also centered */
+        appearance: none; /* Remove default styling for a more consistent look */
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    /* Ensure text fits within the field without wrapping */
+    option {
+        white-space: nowrap; /* Prevent text from wrapping */
+    }
+
+    /* Adjust for smaller screens */
+    @media (max-width: 600px) {
+        select.form-control {
+            width: 60%;
+            font-size: 16px; /* Make the text more readable */
+            line-height: 1.5;
+            height: auto;
+            padding: 7px;
+        }
+    }
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 50px;
+        margin-left: 20px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+        margin-bottom: 40px;
+    }
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+    #add-form {
+         background: white;
+         width: 550px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-bottom: 5px;
+         margin-top: 60px;
+    }
+    .table {
+        margin-left: auto;
+        margin-right: auto;
+        width: 80%;
+    }
+    .add-head {
+        margin-top: 40px;
+        margin-bottom: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+    @media (max-width: 600px) {
+        .table {
+            width: 100%;
+        }
+        #return-button {
+        margin-left: 160px;
+
+    }
+        #add-form {
+            width: 370px;
+            margin-top: 75px;
+            margin-left: 20px;
+        }
+    	.results-container {
+    		margin-left: 0px;
+	}
+    	#add-head {
+    	    margin-left: 7px;
+    	    text-align: center;
+    	    margin-top: 70px;
+	}
+
+        alert alert-danger {
+            margin-left: 70px;
+        }
+        select {
+            text-align: center;
+        }
+
+
+
+
+    }
+</style>
+{% endblock main_content %}

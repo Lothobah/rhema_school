@@ -1,0 +1,146 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+
+                    <form action="{% url 'add_level_save' %}" method="post" role="form" id="add-form">
+                        {% csrf_token %}
+                        <h6 id="add-head"><b>Please select a class and assign a class teacher to the school system.</b></h6>
+                            <div class="centered-select" style="margin-top: 30px;">
+                                <h6 id="mess" style="font-size:12px;">
+                                  {% if messages %}
+                                    {% for message in messages %}
+                                      {% if message.tags == 'error' %}
+                                        <div class="alert alert-info" style="margin-top: 10px; width: 200px;">{{message}}</div>
+                                      {% endif %}
+                                      {% if message.tags == 'success' %}
+                                        <div class="alert alert-success" style="margin-top: 10px; width: 200px; text-align: center;">{{message}}</div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  {% endif %}
+                                </h6>
+                            <label for="">Select Class:
+                            </label>
+                            <div class="select-wrapper">
+                            <select class="form-control" name="level_name" required placeholder="Class" style="font-size: 0.9em; text-align: center; text-align-last: center;">
+                                <option value="">-----------</option>
+                                <option value="Nursery School">Nursery School</option>
+                                <option value="Kindergarten 1">Kindergarten 1</option>
+                                <option value="Kindergarten 2">Kindergarten 2</option>
+                                <option value="Basic 1">Basic 1</option>
+                                <option value="Basic 2">Basic 2</option>
+                                <option value="Basic 3">Basic 3</option>
+                                <option value="Basic 4">Basic 4</option>
+                                <option value="Basic 5">Basic 5</option>
+                                <option value="Basic 6">Basic 6</option>
+                                <option value="Basic 7">Basic 7</option>
+                                <option value="Basic 8">Basic 8</option>
+                                <option value="Basic 9">Basic 9</option>
+                                <option value="Alumni">Alumni</option>
+                            </select>
+                            </div>
+                            </div>
+                            <div class="centered-select" style="margin-top: 15px; margin-bottom: 40px;">
+
+                            <label for="">Select Class Teacher:
+                            </label>
+                            <div class="select-wrapper">
+                            <select name="staff_id" id="staff_id" class="form-control" required style="font-size: 0.9em; text-align: center; text-align-last: center;">
+                                <option value="">-----------</option>
+                                {% for staff in staffs %}
+                                <option value="{{ staff.id }}" style="text-align: center;">
+                                    {{ staff.first_name }} {{ staff.last_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                            </div>
+
+                        <!--</fieldset>-->
+                        <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px;">
+                        <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+                        <button type="submit" value="Apply" id="sub-button" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+
+<style>
+    #add-head {
+        color: black;
+        text-align: center;
+        margin-top: 40px;
+        margin-left: 30px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 5px;
+    }
+    #add-head::after {
+        content: "";
+        display: block;
+        width: 60%;
+        height: 3px;
+        background-color: #888888;
+        margin: 0 auto;
+        position: absolute;
+        bottom: 0;
+        left: 20%;
+    }
+    #add-form {
+         background: white;
+         width: 550px;
+         margin-left: auto;
+         margin-right: auto;
+         margin-bottom: 60px;
+         margin-top: 70px;
+    }
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 50px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+    #mess {
+        margin-left: 17px;
+        margin-top: 20px;
+    }
+    #sub-button {
+        border-radius: 4px;
+        width: 90px;
+        margin-left: 15px; /* Adjusting the space between the link and button */
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: 5px;
+        border: 1px solid red;
+        margin-left: 45px;
+    }
+       @media (max-width: 600px) {
+        #return-button {
+        margin-left: 15px;
+    }
+         #mess {
+             margin-left: 6px;
+         }
+        #add-form {
+            width: 370px;
+            margin-top: 90px;
+        }
+    	.results-container {
+    		margin-left: 0px;
+	}
+    	#add-head {
+    	    margin-left: 5px;
+    	    text-align: center;
+	}
+	.select-wrapper {
+	    width: 160px;
+	    margin-left: 10px;
+	}
+	#sub-button {
+            margin-left: 5px;
+            width: 90px;
+        }
+
+}
+
+  </style>
+{% endblock main_content %}

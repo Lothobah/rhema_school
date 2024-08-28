@@ -1,0 +1,47 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+<!-- Main content -->
+<section class="content" style="margin-top: 30px;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title" style="color: black">Review to make sure the data here is up to date.</h5>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr
+                                    style="color: lightslategray; font-family: Georgia, 'Times New Roman', Times, serif;">
+                                    <th>ID</th>
+                                    <th>Programme</th>
+                                   
+                                    <th>Programme Head</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for programme in programmes %}
+                                <tr>
+                                    <td>{{ programme.id }}</td>
+                                    <td>{{ programme.programme_name }}</td>
+                                    <td>{{ programme.staff_id.first_name }} {{ programme.staff_id.last_name }}</td>
+                                    
+
+                                    <td><a href="/edit_programme/{{programme.id}}" class="btn btn-success">Edit</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+{% endblock main_content %}

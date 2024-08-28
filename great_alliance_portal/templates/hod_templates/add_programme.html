@@ -1,0 +1,48 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+                <div class="form-style-5" style="margin-top: 155px;">
+                    <form action="add_programme_save" method="post" role="form" class="">
+                        {% csrf_token %}
+                        
+                        <fieldset>
+                            <h5>
+                                {% if messages %}
+                                <!--<div class="col-12">-->
+                                {% for message in messages %}
+                            
+                                {% if message.tags == 'error' %}
+                                <h5 style="color: red;">{{message}}</h5>
+                                {% endif %}
+                                {% if message.tags == 'success' %}
+                                <div class="alert alert-success" style="text-align: center;">{{ message }}</div>
+                                {% endif %}
+                                {% endfor %}
+                                <!--</div>-->
+                                {% endif %}
+                            </h5>
+                            <legend><span class="number">.</span> Add Programme.</legend>
+                            
+                            <label for="job">Programme:</label>
+                            <input type="text" name="programme_name" value="{{ programme.id }}"
+                            style="text-align: center;">
+                           
+                            <label for="">Please select programme Head:
+                            </label>
+                            <select name="staff_id" id="staff_id" class="form-control" required>
+                                {% for staff in staffs %}
+                                <option value="{{ staff.id }}" style="text-align: center;">
+                                    {{ staff.first_name }} {{ staff.last_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </fieldset>
+                        
+                        
+                        <div class="form-group">
+                            <button type="submit" class="form-control">Submit</button>
+                        </div>
+                        
+                    </form>
+                </div>
+                   
+{% endblock main_content %}

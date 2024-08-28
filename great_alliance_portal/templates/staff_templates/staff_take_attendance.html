@@ -1,0 +1,184 @@
+{% extends 'staff_templates/base_template.html' %}
+{% block main_content %}
+    {% if staff_assigned_to_a_level %}
+    <h6 class="add-head"><b>Take Attendance for {{ current_semester }}, {{ current_academic_year }} Academic Year.</b></h6>
+    <div class="centered-select" style="margin-top:1px;">
+        <label style="color: black;">Select Class</label>
+        <div class="select-wrapper">
+            <select class="form-control" name="student_level" id="student_level">
+                {% for student_level in student_levels %}
+                <option value="{{ student_level.id }}">{{ student_level.level_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="centered-select" style="margin-top:15px; display:none">
+        <label style="color:black">Select Academic Year</label>
+        <div class="select-wrapper">
+            <select class="form-control" type="hidden" name="academic_year" id="academic_year">
+                {% for academic_year in academic_years %}
+                <option value="{{ academic_year.id }}" {% if academic_year.id == current_academic_year.id %}selected{% endif %}>{{ academic_year.academic_year }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="centered-select" style="margin-top:15px; display:none">
+        <label style="color: black;">Select Current Term</label>
+        <div class="select-wrapper">
+            <select class="form-control"name="semester" id="semester">
+                {% for semester in semesters %}
+                <option value="{{ semester.id }}" {% if semester.id == current_semester.id %}selected{% endif %}>{{ semester.semester }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+
+    <div class="centered-select" style="margin-top:15px;">
+        <button type="button" class="btn btn-secondary" id="fetch_student">Fetch Student</button>
+    </div>
+    <div id="student_data" class="card-body">
+    </div>
+    {% else %}
+    <div style="
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        min-height: 100vh; /* Full viewport height to center vertically */
+        padding: 0 5%; /* Add padding to ensure margin on sides */
+        box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    ">
+    <div class="alert alert-danger"
+         style="
+            text-align: center;
+            width: 100%;
+            margin-left: 80px;
+            margin-top: 20px;
+            max-width: 400px; /* Max width of the alert box */
+            padding: 15px;
+            box-sizing: border-box; /* Ensure padding is included in width */
+        ">
+        You are not authorized to take attendance.
+    </div>
+    {% endif %}
+<style>
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 70px;
+        text-align: center;
+        margin-bottom: 40px;
+}
+    @media (max-width: 600px) {
+	.add-head {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+</style>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+  function getFormattedDate() {
+      const today = new Date();
+      const options = { day: '2-digit', month: 'short', year: 'numeric' };
+      return today.toLocaleDateString('en-GB', options).replace(/ /g, ' ');
+  }
+
+  function setDateInput() {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, '0');
+      const day = today.getDate().toString().padStart(2, '0');
+      const formattedDate = `${year}-${month}-${day}`;
+      document.getElementById('attendance_date').value = formattedDate;
+  }
+
+  $(document).ready(function () {
+    $("#fetch_student").click(function () {
+        var student_level = $("#student_level").val();
+        var academic_year = $("#academic_year").val();
+        var semester = $("#semester").val();
+        $.ajax({
+            url: '{% url 'get_students' %}',
+            type: 'POST',
+            data: { student_level: student_level, academic_year: academic_year, semester: semester },
+        })
+        .done(function (response) {
+            var json_data = JSON.parse(JSON.stringify(response));
+            console.log(json_data);
+            var div_data = `
+                <div class='centered-select' style='margin-top:2px;'>
+                    <div class='centered-select' style='margin-top:2px;'>
+                        <label style='color:black'>Attendance date: </label>
+                        <input type='date' name='attendance_date' id='attendance_date' class='form-control'>
+                    </div>
+                    <div class='centered-select' style='margin-top:12px;'>
+                        <div class='row'></div>
+                    </div>
+                    <div class='container'>
+                        <div class='row'>`;
+
+            Object.keys(json_data).forEach((key, index) => {
+                if (index % 2 === 0 && index !== 0) {
+                    div_data += "</div><div class='row'>";
+                }
+                div_data += `
+                    <div class='col-12 col-md-6' style='margin-top:5px; background: #f3f5f8;'>
+                        <div class='form-check' style='margin-top:5px;'>
+                            ${index + 1}. <input type='checkbox' checked='checked' name='student_data[]' value='${json_data[key]['id']}'>
+                            <label style='color:black; text-align:left;' class='form-check-label'>${json_data[key]['name']}</label>
+                        </div>
+                    </div>`;
+            });
+
+            div_data += `
+                        </div>
+                    </div>
+                    <div class='centered-select' style='margin-top:15px;'>
+                        <button id='save_attendance' class='btn btn-secondary' type='button'>Save Attendance Data</button>
+                    </div>`;
+
+            $("#student_data").html(div_data);
+            setDateInput(); // Set the default date after rendering the input
+        })
+        .fail(function () {
+            alert("Oops, something went wrong.");
+        });
+
+        $(document).on("click", "#save_attendance", function () {
+            $(this).attr("disabled", "disabled");
+            $(this).text("Saving Attendance data...");
+            var student_data = $("input[name='student_data[]']").map(function () {
+                return { "id": $(this).val(), "status": $(this).is(":checked") ? 1 : 0 };
+            }).get();
+            var attendance_date = $("#attendance_date").val();
+            var student_level_id = $("#student_level").val();
+            var academic_year_id = $("#academic_year").val();
+            var semester_id = $("#semester").val();
+            console.log(student_data);
+            student_data = JSON.stringify(student_data);
+
+            $.ajax({
+                url: '{% url 'save_attendance_data' %}',
+                type: 'POST',
+                data: { student_ids: student_data, attendance_date: attendance_date, student_level_id: student_level_id, academic_year_id: academic_year_id, semester_id: semester_id },
+            })
+            .done(function (response) {
+                if (response == "OK") {
+                    alert("Attendance Saved");
+                } else if (response == "ALREADY_TAKEN") {
+                    alert("Attendance has already been taken for this date.");
+                } else {
+                    alert("Refresh the page and take attendance again..");
+                }
+                location.reload();
+            })
+            .fail(function () {
+                alert("Refresh the page and take attendance again..");
+            });
+        });
+    });
+});
+
+</script>
+{% endblock custom_js %}

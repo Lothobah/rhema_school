@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Great Alliance Portal- Login</title>
+  <meta name="description" content="Login to the Great Alliance Portal to access school management tools. Secure access for admin, staff, and bursars.">
+  <meta name="keywords" content="Great Alliance, Great Alliance Portal, Great Alliance, great alliance preparatory/JHS, great alliance preparatory/JHS, great alliance, Login, Admin, Staff, Bursar, Pythonanywhere">
+
+  <!-- Favicons -->
+  <link href="{% static 'kingloth/mycss/mystyle.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/img/clients/client-4.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  <style>
+    #togglePassword {
+        margin-right: 23px;
+    }
+    @media (max-width: 600px) {
+        #togglePassword {
+            margin-right: 8px;
+        }
+    }
+    .text-center {
+      text-align: center;
+    }
+
+    .school-logo {
+      max-width: 100px;
+      margin-bottom: 15px;
+    }
+
+    .login-text {
+      font-size: 24px;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .password-toggle {
+      position: relative;
+    }
+
+    .password-toggle i {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+
+    #footer {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hero Section -->
+  <section id="hero" style="background: white; margin-top: 30px;">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class=" col-lg-6 py-5 py-lg-0 order-2 order-lg-1">
+          <img src="{% static 'assets/img/king.jpg' %}" class="img-fluid" alt="" style="border-radius: 10px; height: 400px;">
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img">
+          <div class="row mt-5">
+            <div class="col-lg-8 mt-5 mt-lg-0">
+              <form class="login-form" action="{% url 'do_login' %}" method="post" enctype="multipart/form-data" style="margin-top: 5px;">
+                {% csrf_token %}
+                {% if messages %}
+                <div class="login-error-div">
+                  {% for message in messages %}
+                  {% if message.tags == 'error' %}
+                  <div class="alert alert-danger">{{ message }}</div>
+                  {% endif %}
+                  {% if message.tags == 'success' %}
+                  <div class="alert alert-success">{{ message }}</div>
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="text-center">
+                  <div class="logo">
+                    <img src="{% static 'assets/img/clients/client-4.png' %}" alt="School Logo" class="school-logo">
+                  </div>
+                  <h2 class="login-text" style="color: #213b52;">Login</h2>
+                </div>
+
+                <div class="login-form-group">
+                  <input class="form-control" type="text" name="username" placeholder="Username" required style="border-radius: 6px; height: 50px;">
+                </div>
+
+                <div class="login-form-group password-toggle">
+                  <input class="form-control" id="password" type="password" name="password" placeholder="Password" style="border-radius: 6px; height: 50px;">
+                  <i class="bi bi-eye" id="togglePassword"></i>
+                </div>
+
+                <div class="login-form-group">
+                  <button type="submit" class="login-button" style="height: 50px;">Login</button>
+                </div>
+
+                <div class="login-form-group" style="margin-top: 30px; margin-bottom: 5px;">
+                  <a href="{% url 'reset_password' %}" style="color:darkblue;">Forgot your Password?</a>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section><!-- End Hero -->
+
+  <!-- Footer -->
+  <footer id="footer" style="text-align: center;">
+    <div class="container footer-bottom clearfix" style="color: black; text-align: center;">
+      <div class="copyright">
+        <span><script>document.write(new Date().getFullYear());</script> &copy; Great Alliance JHS. Developed by KING LOTH</span>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <!-- Password toggle script -->
+  <script>
+    const togglePassword = document.querySelector("#togglePassword");
+    const password = document.querySelector("#password");
+
+    togglePassword.addEventListener("click", function() {
+      // Toggle the type attribute
+      const type = password.getAttribute("type") === "password" ? "text" : "password";
+      password.setAttribute("type", type);
+
+      // Toggle the eye icon
+      this.classList.toggle("bi-eye-slash");
+      this.classList.toggle("bi-eye");
+    });
+  </script>
+</body>
+
+</html>

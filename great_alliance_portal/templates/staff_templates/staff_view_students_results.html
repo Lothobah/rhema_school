@@ -1,0 +1,142 @@
+{% extends 'staff_templates/base_template.html' %}
+
+{% block main_content %}
+<div class="super_container">
+    <h6 class="add-head">Assessment for <b>{{ student.admin.last_name }} {{ student.admin.first_name }}</b></h6>
+
+    <form method="get" action="{% url 'staff_view_students_results' student_id=student.id %}">
+        <div class="row">
+            <div class="centered-select">
+                <label for="academic_year_id">Select Academic Year</label>
+                <div class="select-wrapper">
+                    <select id="academic_year_id" name="academic_year_id" class="form-control" required>
+                        <option value="">-----------</option>
+                        {% for year in academic_years %}
+                        <option value="{{ year.id }}" {% if year.id|stringformat:"s" == selected_academic_year %}selected{% endif %}>
+                            {{ year.academic_year }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="centered-select">
+                <label for="semester_id">Select Term</label>
+                <div class="select-wrapper">
+                    <select id="semester_id" name="semester_id" class="form-control" required>
+                        <option value="">-----------</option>
+                        {% for semester in semesters %}
+                        <option class="voption" value="{{ semester.id }}" {% if semester.id|stringformat:"s" == selected_semester %}selected{% endif %}>
+                            {{ semester.semester }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group centered-select" style="margin-top:12px;">
+                <button style="" type="submit" class="btn btn-secondary ">Display Assessment</button>
+            </div>
+        </div>
+    </form>
+
+    {% if messages %}
+    <h6 style="font-size:13px; margin-top:40px;">
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-danger" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+        {% endif %}
+        {% if message.tags == 'success' %}
+        <div class="alert alert-success" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+        {% endif %}
+        {% endfor %}
+    </h6>
+    {% endif %}
+
+    {% if results %}
+    <table class="table table-bordered table-responsive" style="margin-top:50px;">
+        <thead>
+
+            <tr>
+                <th colspan="11" style="text-align: center;">{{ level_name }} - {{ semester }} - {{ academic_year }} ACADEMIC YEAR</th>
+
+            </tr>
+            {% if staff_assigned_to_a_level %}
+            <tr>
+                <th colspan="11" style="text-align:center;">TOTAL SCORE: {{ student_total_mark|floatformat:0 }} - POSITION IN CLASS: {{ overall_position }}</th>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>SUBJECT</th>
+                <th>INDIVIDUAL TEST</th>
+                <th>GROUP WORK</th>
+                <th>CLASS TEST</th>
+                <th>PROJECT</th>
+                <th>TOTAL 50%</th>
+                <th>EXAM 50%</th>
+                <th>TOTAL 100%</th>
+                <th>POSITION IN SUBJECT</th>
+                <th>GRADE</th>
+                <th>REMARK</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result.course_id.course_name }}</td>
+                <td>{{ result.individual_test_score|floatformat:0 }}</td>
+                <td>{{ result.group_work_score|floatformat:0 }}</td>
+                <td>{{ result.class_test_score|floatformat:0 }}</td>
+                <td>{{ result.project_score|floatformat:0 }}</td>
+                <td>{{ result.assignment_mark|floatformat:0 }}</td>
+                <td>{{ result.exam_mark|floatformat:0 }}</td>
+                <td>{{ result.total_mark|floatformat:0 }}</td>
+                <td>{{ result.course_position }}</td>
+                <td>{{ result.grade }}</td>
+                <td>{{ result.remark }}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+<style>
+    .table {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .add-head {
+        margin-top: 12px;
+        margin-left: 60px;
+    }
+    @media (max-width: 600px) {
+        .add-head {
+            margin-left: 15px;
+        }
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-right: 0px;
+            right: 0px;
+            margin-left: 0px;
+            left: 0px;
+        }
+        .super_container {
+            width: 100%;
+            max-width: 100%;
+            right: 0px;
+            margin-right: 0px;
+        }
+
+    }
+</style>
+{% endblock main_content %}
+<style>
+@media (max-width: 768px) {
+    .select-wrapper select {
+        text-align-last: center; /* Ensures centering on mobile */
+        font-size: 16px; /* Adjust font size for better readability */
+        width: 70px;
+    }
+}
+</style>

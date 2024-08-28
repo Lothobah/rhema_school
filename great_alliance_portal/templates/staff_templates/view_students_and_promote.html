@@ -1,0 +1,104 @@
+{% extends "staff_templates/base_template.html" %}
+{% block main_content %}
+    {% if staff_assigned_to_a_level %}
+    <h6 class="add-head"><b>Students Promotions</b></h6>
+    <form method="post">
+        {% csrf_token %}
+        <h6 style="font-size:13px;">
+            {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'error' %}
+            <div class="alert alert-danger" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+            {% endif %}
+            {% if message.tags == 'success' %}
+            <div class="alert alert-success" style="text-align: center; width: 100%; max-width: 300px; margin: 0 auto;">{{ message }}</div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+        </h6>
+        <div class="centered-select" style="margin-top:15px; margin-bottom: 40px;">
+            <label for="level">Select class:</label>
+            <div class="select-wrapper">
+            <select name="level" style="text-align:center;" class="form-control" id="level" onchange="this.form.submit()">
+                <option value="" style="text-align:center;">----------</option>
+                {% for level in levels %}
+                    <option value="{{ level.id }}" {% if selected_level and selected_level.id == level.id %}selected{% endif %}>{{ level.level_name }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+    </form>
+
+    {% if selected_level %}
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="promote_students" value="true">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="text-align:center">Total Marks</th>
+                    <th style="text-align:center">Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in students %}
+                <tr>
+                    <td><input type="checkbox" checked="checked" name="selected_students" value="{{ data.student.id }}"> {{ forloop.counter}} . {{ data.student.admin.last_name }} {{ data.student.admin.first_name }}</td>
+                    <td style="text-align:center;">{{ data.total_marks|floatformat:0 }}</td>
+                    <td style="text-align:center;">{{ data.position }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div  class="centered-select" style="margin-top:10px;">
+            <label for="next_level">Promote to:</label>
+            <div class="select-wrapper">
+            {{ form.next_level }}
+            </div>
+        </div>
+        <div class="centered-select" style="margin-top:10px; margin-bottom:10px;">
+        <button type="submit" class="btn btn-secondary">Promote Students</button>
+        </div>
+    </form>
+    {% endif %}
+    {% else %}
+    <div style="
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        min-height: 100vh; /* Full viewport height to center vertically */
+        padding: 0 5%; /* Add padding to ensure margin on sides */
+        box-sizing: border-box; /* Ensure padding is included in the width calculation */
+    ">
+    <div class="alert alert-danger"
+         style="
+            text-align: center;
+            width: 100%;
+            max-width: 400px; /* Max width of the alert box */
+            padding: 15px;
+            box-sizing: border-box; /* Ensure padding is included in width */
+        ">
+        You are not authorized to promote students.
+    </div>
+</div>
+    {% endif %}
+<style>
+    .add-head {
+        margin-left: 80px;
+        margin-top: 16px;
+}
+    .table {
+        margin-left: 70px;
+        margin-top: 10px;
+    }
+    @media (max-width: 600px) {
+	.add-head {
+		margin-left: 15px;
+	}
+	.table {
+	    margin-left: 0px;
+	}
+}
+</style>
+{% endblock main_content %}

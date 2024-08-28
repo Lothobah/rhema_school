@@ -1,0 +1,152 @@
+{% extends 'hod_templates/base_template.html' %}
+{% block main_content %}
+    {% if student_levels %}
+    <h6 class="add-head"><b>Please Select a Class to Review Student Attendance Reports.</b></h6>
+    <form method="get" action="{% url 'hod_all_attendance' %}">
+        <div class="centered-select" style="margin-top: 11px;">
+        <h6 style="font-size:12px;">
+              {% if messages %}
+                {% for message in messages %}
+                  {% if message.tags == 'error' %}
+                    <div class="alert alert-danger" style="margin-top: 1px;">{{message}}</div>
+                  {% endif %}
+                  {% if message.tags == 'success' %}
+                    <div class="alert alert-success" style="margin-top: 10px; text-align: center;">{{message}}</div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+        </h6>
+        </div>
+        <div class="centered-select" style="margin-top:15px;">
+            <label for="level_id">Select Class</label>
+            <div class="select-wrapper">
+            <select id="level_id" name="level_id" class="form-control" required>
+                <option value="">------------</option>
+                {% for level in student_levels %}
+                <option value="{{ level.id }}" {% if level.id|stringformat:"s" == selected_level %}selected{% endif %}>
+                    {{ level.level_name }}
+                </option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <div class="centered-select" style="margin-top:10px; margin-bottom: 10px;">
+        <button style="margin-top:10px;" type="submit" class="btn btn-success mt-3">Filter Students</button>
+        </div>
+    </form>
+
+    {% if students %}
+   <div class="row" id="student-container">
+    {% for student in students %}
+    <div class="col-md-6 mb-3">
+        <div class="d-flex align-items-center student-box">
+            <div class="flex-shrink-0">
+                <span class="badge bg-secondary">{{ forloop.counter }}.</span>
+            </div>
+            <div class="flex-grow-1 ms-2">
+                <b>
+                    <a href="{% url 'hod_view_all_attendance' student_id=student.id %}" style="color: black;">
+                        {{ student.admin.last_name|upper }} {{ student.admin.first_name }}
+                    </a>
+                </b>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="centered-select">
+        <h6 class="alert alert-danger">There are currently no students enrolled in the selected class.</h6>
+    </div>
+    {% endif %}
+    <div class="form-group mt-3 d-flex align-items-center justify-content-start" style="margin-bottom: 75px; margin-top: 10px;">
+        <a href="{% url 'admin_homepage' %}" class="btn btn-light" id="return-button">&larr; Return to Main Menu</a>
+    </div>
+<style>
+    #student-container {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 900px;
+        background: #f3f5f8;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    #student-container:hover {
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .student-box {
+        padding: 6px;
+        margin-left: 80px;
+
+    }
+
+    .student-box .badge {
+        font-size: 10px;
+        padding: 8px 12px;
+        background-color: #6c757d;
+        border-radius: 50%;
+    }
+
+    .student-box a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .student-box a:hover {
+        text-decoration: underline;
+    }
+
+    #return-button {
+        border-radius: 4px;
+        margin-right: auto;
+        margin-left: auto;
+        border: 1px solid red;
+        margin-top: 10px;
+    }
+    .add-head {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 70px;
+        text-align: center;
+        margin-bottom: 10px;
+
+}
+    .table {
+        margin-left: 70px;
+        margin-top: 10px;
+    }
+    .row {
+        margin-left: 70px;
+    }
+    @media (max-width: 600px) {
+    #student-container {
+        margin-left: 15px;
+        margin-right: 15px;
+        padding: 15px;
+    }
+    #level_id {
+        text-align-last: center;
+    }
+    .select-wrapper {
+        width: 200px;
+        margin-left: 30px;
+    }
+	.table {
+	    margin-left: 0px;
+	}
+	.row {
+	    margin-left: 0px;
+	}
+	#stud {
+	    margin-left: auto;
+	    margin-right: auto;
+	}
+}
+</style>
+
+{% endblock main_content %}

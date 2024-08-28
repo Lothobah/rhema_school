@@ -1,0 +1,43 @@
+{% extends 'staff_templates/base_template.html' %}
+{% load static %}
+{% block main_content %}
+<br>
+<div class="container-fluid songs-container" style="margin-top: 125px;">
+
+    <div class="row">
+        <!-- Left Album Info -->
+        <div class="col-sm-6 col-md-3">
+            <div class="panel panel-default">
+
+                <div class="panel-body" style="background-color: white;">
+                    
+                    <h1 align="center" style="font-family: 'Times New Roman', Times, serif;">{{ course.course_code }}<br> <small>{{ course.course_name }}</small></h1>
+                    <h2 align="center">{{ course.instructor }}</h2>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-7"
+            style="align:center; overflow-y: scroll; height:650px;border: 0px solid #66cdaa;background-color:white;color:black;font-family: 'Abhaya Libre';font-size:16px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+            <h3 align="center" ; style="text-align:center;font-family:'Times New Roman', Times, serif;font-size:40px;color: #728892">
+                Assignments</h3>
+         
+            {% for assignment in assignments reversed %}
+            <div style="background-color:white; border-radius:2%;padding:10px; margin:5px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+                {{ assignment.description }}<br>
+                {{ assignment.file }}
+                <b style="color: black;">Deadline : {{ assignment.deadline }}</b><br>
+                <a href="{% url 'view_all_submissions' assignment.id %}">
+                    <button type="submit" class="btn btn-secondary">Submissions</button>
+                </a>
+                
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+    {% endblock main_content %}

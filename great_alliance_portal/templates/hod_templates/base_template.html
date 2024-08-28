@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Great Alliance School Portal - Admin Dashboard</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="description" content="Login to the Great Alliance Portal. Administrator, Staffs, Bursar.">
+    <meta name="keywords" content="Great Alliance JHS Portal, Great Alliance Portal, Great Alliance, great alliance preparatory/JHS, great alliance preparatory/JHS, great alliance staffs portal, Login, great alliance Administrator portal, Staff, Great Alliance School Portal">
+    <meta name="google-site-verification" content="I4LEar18uTN594j0nCsKuRRgSdN8V6LYH3c3KZtDihM" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static "styles/bootstrap4/bootstrap.min.css" %}">
+    <link href="{% static "plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static "plugins/OwlCarousel2-2.2.1/owl.carousel.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "plugins/OwlCarousel2-2.2.1/owl.theme.default.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "plugins/OwlCarousel2-2.2.1/animate.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "styles/main_styles.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "styles/responsive.css" %}">
+    <!-- Awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!--<title>Great Alliance Portal - Admin</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">-->
+
+    <!-- Favicons -->
+    <link href="{% static "kingloth/mycss/mystyle.css" %}" rel="stylesheet">
+    <link href="{% static "assets/img/clients/client-4.png" %}" rel="icon">
+    <link rel="stylesheet" href="{% static "
+        https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" %}">
+    <!--<link href="{% static "assets/img/apple-touch-icon.png" %}" rel="apple-touch-icon">-->
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GOOGLE_ANALYTICS_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'YOUR_GOOGLE_ANALYTICS_ID');
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static "js/jquery-1.11.1.js" %}"></script>
+    <script src="{% static "js/rango.js" %}"></script>
+    <link href="{% static "assets/vendor/aos/aos.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/bootstrap-icons/bootstrap-icons.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/boxicons/css/boxicons.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/glightbox/css/glightbox.min.css" %}" rel="stylesheet">
+    <link href="{% static "assets/vendor/swiper/swiper-bundle.min.css" %}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{% static "assets/css/style.css" %}" rel="stylesheet">
+    <!--start of new base template-->
+    <!--End of new base template -->
+    <!-- =======================================================
+  * Template Name: Bocor - v4.7.1
+  * Template URL: https://bootstrapmade.com/bocor-bootstrap-template-nice-animation/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+
+  <style>
+    @media (max-width:600px){
+      .logo a{
+        display:none;
+      }
+    }
+  </style>
+</head>
+
+<body style="background: #f3f5f8;">
+
+    <!-- ======= Header ======= -->
+    {% include 'hod_templates/header.html' %}
+    <!-- End Header -->
+
+    <!-- ======= Hero Section ======= -->
+    {% block main_content %}{% endblock main_content %}
+    <!-- End Hero -->
+
+    <!-- ======= Footer ======= -->
+    {% include 'hod_templates/footer.html' %}
+   <!-- End  Footer -->
+
+
+
+
+    <!--New template scripts -->
+    <script src="{% static "js/jquery-3.2.1.min.js" %}"></script>
+    <script src="{% static "styles/bootstrap4/popper.js" %}"></script>
+    <script src="{% static "styles/bootstrap4/bootstrap.min.js" %}"></script>
+    <script src="{% static "plugins/greensock/TweenMax.min.js" %}"></script>
+    <script src="{% static "plugins/greensock/TimelineMax.min.js" %}"></script>
+    <script src="{% static "plugins/scrollmagic/ScrollMagic.min.js" %}"></script>
+    <script src="{% static "plugins/greensock/animation.gsap.min.js" %}"></script>
+    <script src="{% static "plugins/greensock/ScrollToPlugin.min.js" %}"></script>
+    <script src="{% static "plugins/OwlCarousel2-2.2.1/owl.carousel.js" %}"></script>
+    <script src="{% static "plugins/scrollTo/jquery.scrollTo.min.js" %}"></script>
+    <script src="{% static "plugins/easing/easing.js" %}"></script>
+    <script src="{% static "js/custom.js" %}"></script>
+
+    <!--Old script source-->
+
+    <!-- Vendor JS Files -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{% static "assets/vendor/aos/aos.js" %}"></script>
+    <script src="{% static "assets/vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "assets/vendor/glightbox/js/glightbox.min.js" %}"></script>
+    <script src="{% static "assets/vendor/isotope-layout/isotope.pkgd.min.js" %}"></script>
+    <script src="{% static "assets/vendor/swiper/swiper-bundle.min.js" %}"></script>
+    <script src="{% static "assets/vendor/php-email-form/validate.js" %}"></script>
+    <!-- Template Main JS File -->
+    <script src="{% static "assets/js/main.js" %}"></script>
+{% block custom_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const greetingElement = document.getElementById('greeting-message');
+    const currentHour = new Date().getHours();
+    let greeting = '';
+
+    if (currentHour < 12) {
+        greeting = 'Good Morning,';
+    } else if (currentHour < 18) {
+        greeting = 'Good Afternoon,';
+    } else {
+        greeting = 'Good Evening,';
+    }
+
+    greetingElement.textContent = greeting;
+});
+</script>
+{% endblock custom_js %}
+</body>
+
+</html>
+
